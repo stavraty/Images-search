@@ -32,11 +32,12 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VYZ-It-pyA">
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Search images, vectors and more" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="VYZ-It-pyA">
                                 <rect key="frame" x="16" y="401" width="361" height="50"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="50" id="vfW-9I-rR1"/>
                                 </constraints>
+                                <color key="textColor" red="0.3411764705882353" green="0.3411764705882353" blue="0.3411764705882353" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -61,6 +62,17 @@
                                     <color key="baseBackgroundColor" red="0.28627450980392155" green="0.25098039215686274" blue="0.88235294117647056" alpha="1" colorSpace="calibratedRGB"/>
                                 </buttonConfiguration>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xRJ-KC-EJ1">
+                                <rect key="frame" x="16" y="401" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="50" id="ByY-UH-Fx8"/>
+                                    <constraint firstAttribute="width" constant="50" id="FhQ-G5-8BE"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system" title=" ">
+                                    <color key="baseForegroundColor" red="0.3411764705882353" green="0.3411764705882353" blue="0.3411764705882353" alpha="1" colorSpace="calibratedRGB"/>
+                                </buttonConfiguration>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -70,12 +82,15 @@
                             <constraint firstItem="dTe-BQ-p3N" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="8wH-SP-Bdg"/>
                             <constraint firstItem="NmG-c7-stl" firstAttribute="width" secondItem="VYZ-It-pyA" secondAttribute="width" multiplier="0.945026" id="FI8-6t-EwE"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VYZ-It-pyA" secondAttribute="trailing" constant="16" id="Fw6-WI-8nu"/>
-                            <constraint firstItem="ZSh-Cd-tza" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="GBQ-cX-N8r"/>
+                            <constraint firstItem="ZSh-Cd-tza" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="GBQ-cX-N8r"/>
                             <constraint firstItem="VYZ-It-pyA" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="InB-84-Q1j"/>
                             <constraint firstItem="dTe-BQ-p3N" firstAttribute="top" secondItem="VYZ-It-pyA" secondAttribute="bottom" constant="30" id="NIK-2w-LTo"/>
-                            <constraint firstItem="ZSh-Cd-tza" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="Ogl-R2-hBL"/>
+                            <constraint firstItem="ZSh-Cd-tza" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Ogl-R2-hBL"/>
+                            <constraint firstItem="xRJ-KC-EJ1" firstAttribute="bottom" secondItem="VYZ-It-pyA" secondAttribute="bottom" id="PnU-Pq-bGI"/>
                             <constraint firstItem="JrW-ti-GFh" firstAttribute="width" secondItem="VYZ-It-pyA" secondAttribute="width" multiplier="0.945026" id="Tlg-wi-C5u"/>
                             <constraint firstItem="VYZ-It-pyA" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="aJq-kJ-m0y"/>
+                            <constraint firstItem="xRJ-KC-EJ1" firstAttribute="leading" secondItem="VYZ-It-pyA" secondAttribute="leading" id="ae1-rm-YGD"/>
+                            <constraint firstItem="xRJ-KC-EJ1" firstAttribute="top" secondItem="VYZ-It-pyA" secondAttribute="top" id="e7H-Fy-f5M"/>
                             <constraint firstItem="NmG-c7-stl" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="mqu-M0-cFQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NmG-c7-stl" secondAttribute="bottom" id="oD0-Ib-wfg"/>
                             <constraint firstAttribute="bottom" secondItem="ZSh-Cd-tza" secondAttribute="bottom" id="oDB-aU-5HD"/>
@@ -99,7 +114,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="128.98550724637681" y="-29.464285714285712"/>
+            <point key="canvasLocation" x="127.48091603053435" y="-29.577464788732396"/>
         </scene>
         <!--Search ResultsVC-->
         <scene sceneID="tzd-r1-zFM">
