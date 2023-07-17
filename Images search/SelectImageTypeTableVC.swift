@@ -9,16 +9,16 @@ import UIKit
 
 protocol SelectImageTypeTableVCDelegate: AnyObject {
     func didChooseImageType(type: String)
+    func displayStringForType(type: String) -> String?
 }
 
 class SelectImageTypeTableVC: UITableViewController {
     
     weak var delegate: SelectImageTypeTableVCDelegate?
     
-    let imageTypesArray = ["Images",
-                           "Photos",
-                           "Illustrations",
-                           "Vectors"]
+    let imageTypesAPI = ["all", "photo", "illustration", "vector"]
+    let imageTypesDisplay = ["Images", "Photo", "Illustration", "Vector"]
+    let imageTypeMap: [String: String] = ["Images": "all", "Photo": "photo", "Illustration": "illustration", "Vector": "vector"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,9 +27,11 @@ class SelectImageTypeTableVC: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        delegate?.didChooseImageType(type: imageTypesArray[indexPath.row])
+        let selectedAPIType = imageTypesAPI[indexPath.row]
+        delegate?.didChooseImageType(type: selectedAPIType)
         dismiss(animated: true, completion: nil)
     }
+
     
     override func viewWillLayoutSubviews() {
         preferredContentSize = CGSize(width: 200, height: tableView.contentSize.height)
@@ -40,13 +42,13 @@ class SelectImageTypeTableVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return imageTypesArray.count
+        return imageTypesAPI.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ImageTypeCell", for: indexPath)
 
-        let textData = imageTypesArray[indexPath.row]
+        let textData = imageTypesDisplay[indexPath.row]
         cell.textLabel?.text = textData
 
         return cell

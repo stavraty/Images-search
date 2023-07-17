@@ -19,6 +19,9 @@
 		F0C9BBE02A5EA63400C8F5FD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F0C9BBDF2A5EA63400C8F5FD /* Assets.xcassets */; };
 		F0C9BBE32A5EA63400C8F5FD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F0C9BBE12A5EA63400C8F5FD /* LaunchScreen.storyboard */; };
 		F0D132332A61CBD10023FBE8 /* SelectImageTypeTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */; };
+		F0D132352A65479C0023FBE8 /* ImageCacheService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D132342A65479C0023FBE8 /* ImageCacheService.swift */; };
+		F0D132372A654B310023FBE8 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0D132362A654B310023FBE8 /* ImageGridCell.swift */; };
+		F0DDB6DA2A65672D00A86BC1 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +40,9 @@
 		F0C9BBE22A5EA63400C8F5FD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F0C9BBE42A5EA63400C8F5FD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectImageTypeTableVC.swift; sourceTree = "<group>"; };
+		F0D132342A65479C0023FBE8 /* ImageCacheService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageCacheService.swift; sourceTree = "<group>"; };
+		F0D132362A654B310023FBE8 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
+		F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		FADB470C8862F752CBBA8996 /* Pods-Images search.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Images search.release.xcconfig"; path = "Target Support Files/Pods-Images search/Pods-Images search.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -102,6 +108,9 @@
 				F0C9BBE42A5EA63400C8F5FD /* Info.plist */,
 				F08871972A614E2300161EB7 /* PixabayResponse.swift */,
 				F08871992A614FD100161EB7 /* APIService.swift */,
+				F0D132342A65479C0023FBE8 /* ImageCacheService.swift */,
+				F0D132362A654B310023FBE8 /* ImageGridCell.swift */,
+				F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */,
 			);
 			path = "Images search";
 			sourceTree = "<group>";
@@ -224,11 +233,14 @@
 				F0C9BBDB2A5EA63100C8F5FD /* SearchVC.swift in Sources */,
 				F088719A2A614FD100161EB7 /* APIService.swift in Sources */,
 				F09BCF6C2A5F381600058E42 /* SearchResultsVC.swift in Sources */,
+				F0D132372A654B310023FBE8 /* ImageGridCell.swift in Sources */,
 				F0D132332A61CBD10023FBE8 /* SelectImageTypeTableVC.swift in Sources */,
 				F0C9BBD72A5EA63100C8F5FD /* AppDelegate.swift in Sources */,
 				F09BCF6E2A5F391B00058E42 /* ImagePageVC.swift in Sources */,
+				F0DDB6DA2A65672D00A86BC1 /* SearchManager.swift in Sources */,
 				F0C9BBD92A5EA63100C8F5FD /* SceneDelegate.swift in Sources */,
 				F08871982A614E2300161EB7 /* PixabayResponse.swift in Sources */,
+				F0D132352A65479C0023FBE8 /* ImageCacheService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

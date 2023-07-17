@@ -12,11 +12,16 @@ class SearchVC: UIViewController {
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var selectImageTypeButton: UIButton!
     
+    var chosenImageType: String? = nil
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setupGestures()
         setupButtonBorder()
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
         
     }
     
@@ -52,6 +57,21 @@ class SearchVC: UIViewController {
         
         self.present(popVC, animated: true)
     }
+    
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
+    }
+    
+    @IBAction func searchButtonTapped(_ sender: Any) {
+
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        if let searchResultsVC = storyboard.instantiateViewController(withIdentifier: "SearchResultsVC") as? SearchResultsVC {
+            let query = searchTF.text ?? ""
+            let imageType = chosenImageType ?? "all"
+            searchResultsVC.fetchImages(query: query, imageType: imageType)
+            navigationController?.pushViewController(searchResultsVC, animated: true)
+        }
+    }
 }
 
 extension SearchVC: UIPopoverPresentationControllerDelegate {
@@ -62,6 +82,13 @@ extension SearchVC: UIPopoverPresentationControllerDelegate {
 
 extension SearchVC: SelectImageTypeTableVCDelegate {
     func didChooseImageType(type: String) {
-        selectImageTypeButton.setTitle(type, for: .normal)
+        
+        chosenImageType = type
+        selectImageTypeButton.setTitle(displayStringForType(type: type), for: .normal)
+    }
+
+    func displayStringForType(type: String) -> String? {
+        let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
+        return imageTypeMap[type]
     }
 }
