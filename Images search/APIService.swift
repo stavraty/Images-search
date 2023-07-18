@@ -11,8 +11,8 @@ class APIService {
     
     private let apiKey = "1461007-d09f3a409d0a4d2345817fec2"
     
-    func fetchImages(query: String, imageType: String, completion: @escaping (Result<PixabayResponse, Error>) -> Void) {
-        let urlString = "https://pixabay.com/api/?key=\(apiKey)&q=\(query)&image_type=\(imageType)"
+    func fetchImages(query: String, imageType: String, page: Int, completion: @escaping (Result<PixabayResponse, Error>) -> Void) {
+        let urlString = "https://pixabay.com/api/?key=\(apiKey)&q=\(query)&image_type=\(imageType)&page=\(page)"
         let url = URL(string: urlString.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)
         
         URLSession.shared.dataTask(with: url!) { (data, response, error) in

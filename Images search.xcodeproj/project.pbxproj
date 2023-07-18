@@ -107,23 +107,39 @@
 		F0C9BBD52A5EA63100C8F5FD /* Images search */ = {
 			isa = PBXGroup;
 			children = (
-				F0855B622A667B8D00405006 /* ImageGridCell */,
 				F0C9BBD62A5EA63100C8F5FD /* AppDelegate.swift */,
 				F0C9BBD82A5EA63100C8F5FD /* SceneDelegate.swift */,
-				F0C9BBDA2A5EA63100C8F5FD /* SearchVC.swift */,
-				F09BCF6B2A5F381600058E42 /* SearchResultsVC.swift */,
-				F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */,
-				F0C9BBDC2A5EA63100C8F5FD /* Main.storyboard */,
-				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */,
-				F0C9BBDF2A5EA63400C8F5FD /* Assets.xcassets */,
+				F0F7B7062A6706FB001F39BC /* Controller */,
+				F0F7B7052A6706BE001F39BC /* Layout */,
 				F0C9BBE12A5EA63400C8F5FD /* LaunchScreen.storyboard */,
-				F0C9BBE42A5EA63400C8F5FD /* Info.plist */,
 				F08871972A614E2300161EB7 /* PixabayResponse.swift */,
 				F08871992A614FD100161EB7 /* APIService.swift */,
 				F0D132342A65479C0023FBE8 /* ImageCacheService.swift */,
 				F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */,
+				F0C9BBDF2A5EA63400C8F5FD /* Assets.xcassets */,
+				F0C9BBE42A5EA63400C8F5FD /* Info.plist */,
 			);
 			path = "Images search";
+			sourceTree = "<group>";
+		};
+		F0F7B7052A6706BE001F39BC /* Layout */ = {
+			isa = PBXGroup;
+			children = (
+				F0C9BBDC2A5EA63100C8F5FD /* Main.storyboard */,
+				F0855B622A667B8D00405006 /* ImageGridCell */,
+			);
+			path = Layout;
+			sourceTree = "<group>";
+		};
+		F0F7B7062A6706FB001F39BC /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				F0C9BBDA2A5EA63100C8F5FD /* SearchVC.swift */,
+				F09BCF6B2A5F381600058E42 /* SearchResultsVC.swift */,
+				F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */,
+				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -19,10 +19,7 @@ class SearchVC: UIViewController {
         
         setupGestures()
         setupButtonBorder()
-        
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-        
+        setupTapGesture()
     }
     
     func setupButtonBorder() {
@@ -36,11 +33,15 @@ class SearchVC: UIViewController {
         selectImageTypeButton.layer.addSublayer(borderLayer)
     }
     
+    func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
     private func setupGestures() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
         tapGesture.numberOfTapsRequired = 1
         selectImageTypeButton.addGestureRecognizer(tapGesture)
-        
     }
     
     @objc private func tapped() {
@@ -63,7 +64,6 @@ class SearchVC: UIViewController {
     }
     
     @IBAction func searchButtonTapped(_ sender: Any) {
-
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         if let searchResultsVC = storyboard.instantiateViewController(withIdentifier: "SearchResultsVC") as? SearchResultsVC {
             let query = searchTF.text ?? ""

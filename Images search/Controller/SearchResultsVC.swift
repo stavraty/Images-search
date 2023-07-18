@@ -9,27 +9,30 @@ import UIKit
 
 class SearchResultsVC: UIViewController {
     
+    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var searchTF: UITextField!
+    @IBOutlet weak var filterButton: UIButton!
+    
     private let api = APIService()
     private var images: [PixabayResponse.Image] = []
-    
-    var estimateWidth = 160.0
-    var cellMarginSize = 16.0
-    
-    @IBOutlet weak var collectionView: UICollectionView!
+    private var currentPage = 1
+    private var query: String?
+    private var imageType: String?
+    private var estimateWidth = 160.0
+    private var cellMarginSize = 16.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
-        
-        collectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
-        
+        registerCells()
         self.setupGridView()
     }
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        
         self.setupGridView()
         DispatchQueue.main.async {
             self.collectionView.reloadData()
@@ -41,11 +44,26 @@ class SearchResultsVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    func registerCells() {
+        collectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
+    }
+    
     func fetchImages(query: String, imageType: String) {
-        api.fetchImages(query: query, imageType: imageType) { [weak self] result in
+        self.query = query
+        self.imageType = imageType
+        fetchNextPage()
+    }
+    
+    func fetchNextPage() {
+        guard let query = query, let imageType = imageType else {
+            return
+        }
+        
+        api.fetchImages(query: query, imageType: imageType, page: currentPage) { [weak self] result in
             switch result {
             case .success(let pixabayResponse):
-                self?.images = pixabayResponse.hits
+                self?.images.append(contentsOf: pixabayResponse.hits)
+                self?.currentPage += 1
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
                     self?.setupGridView()
@@ -68,6 +86,9 @@ class SearchResultsVC: UIViewController {
     @IBAction func goHomeButtonTapped(_ sender: Any) {
         self.navigationController?.popToRootViewController(animated: true)
     }
+    
+    @IBAction func filterButtonTapped(_ sender: Any) {
+    }
 }
 
 extension SearchResultsVC: UICollectionViewDataSource {
@@ -84,10 +105,15 @@ extension SearchResultsVC: UICollectionViewDataSource {
         cell?.setImage(with: imageURL)
         return cell ?? UICollectionViewCell()
     }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        if indexPath.row == images.count - 1 {
+            fetchNextPage()
+        }
+    }
 }
 
 extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.calculateWith()
         return CGSize(width: width, height: width)
@@ -96,12 +122,11 @@ extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
     func calculateWith() -> CGFloat {
         let estimateWidth = CGFloat(estimateWidth)
         let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
-        
         let margin = CGFloat(cellMarginSize * 2)
         let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
 
         return width
     }
-
 }
+
 

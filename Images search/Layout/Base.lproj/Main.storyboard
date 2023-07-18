@@ -264,6 +264,9 @@
                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
                                             <color key="baseForegroundColor" red="0.45490196078431372" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="filterButtonTapped:" destination="dnI-Ox-9ds" eventType="touchUpInside" id="YEN-A7-dww"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="79M-OG-xUy" userLabel="LogoIcon">
                                         <rect key="frame" x="8" y="64" width="52" height="52"/>
@@ -535,6 +538,8 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="collectionView" destination="6Eh-VD-SEG" id="0zv-Fy-sA7"/>
+                        <outlet property="filterButton" destination="zTP-Az-nKC" id="Ox9-R5-dVH"/>
+                        <outlet property="searchTF" destination="VeT-5g-fMj" id="DZr-K1-FCM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Y6I-CW-Oz8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
