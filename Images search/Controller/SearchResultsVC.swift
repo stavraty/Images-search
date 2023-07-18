@@ -24,7 +24,6 @@ class SearchResultsVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
         registerCells()
@@ -46,6 +45,8 @@ class SearchResultsVC: UIViewController {
     
     func registerCells() {
         collectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
+        filterCollectionView.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
+
     }
     
     func fetchImages(query: String, imageType: String) {
@@ -124,9 +125,6 @@ extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
         let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
         let margin = CGFloat(cellMarginSize * 2)
         let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
-
         return width
     }
 }
-
-

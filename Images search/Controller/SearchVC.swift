@@ -20,6 +20,7 @@ class SearchVC: UIViewController {
         setupGestures()
         setupButtonBorder()
         setupTapGesture()
+        setupSearchTextField()
     }
     
     func setupButtonBorder() {
@@ -36,6 +37,11 @@ class SearchVC: UIViewController {
     func setupTapGesture() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         view.addGestureRecognizer(tapGesture)
+    }
+    
+    func setupSearchTextField() {
+        searchTF.delegate = self
+        searchTF.returnKeyType = .search
     }
     
     private func setupGestures() {
@@ -90,5 +96,13 @@ extension SearchVC: SelectImageTypeTableVCDelegate {
     func displayStringForType(type: String) -> String? {
         let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
         return imageTypeMap[type]
+    }
+}
+
+extension SearchVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        searchButtonTapped(textField)
+        return true
     }
 }
