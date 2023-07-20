@@ -31,7 +31,6 @@ class SelectImageTypeTableVC: UITableViewController {
         delegate?.didChooseImageType(type: selectedAPIType)
         dismiss(animated: true, completion: nil)
     }
-
     
     override func viewWillLayoutSubviews() {
         preferredContentSize = CGSize(width: 200, height: tableView.contentSize.height)

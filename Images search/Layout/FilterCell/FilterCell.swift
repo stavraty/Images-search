@@ -17,7 +17,14 @@ class FilterCell: UICollectionViewCell {
     }
 
     func configure(with filter: String) {
-        filterLabel.text = filter
+        print("Configuring cell with filter: \(filter)")
+        filterLabel.text = filter.capitalizingFirstLetter()
+    }
+}
+
+extension String {
+    func capitalizingFirstLetter() -> String {
+        return prefix(1).localizedCapitalized + dropFirst()
     }
 }
 

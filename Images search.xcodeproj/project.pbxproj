@@ -25,6 +25,7 @@
 		F0DDB6DA2A65672D00A86BC1 /* SearchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */; };
 		F0F7B70A2A671EE3001F39BC /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B7082A671EE3001F39BC /* FilterCell.swift */; };
 		F0F7B70B2A671EE3001F39BC /* FilterCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0F7B7092A671EE3001F39BC /* FilterCell.xib */; };
+		F0F7B70D2A6817DD001F39BC /* PopoverPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0F7B70C2A6817DD001F39BC /* PopoverPresenter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -49,6 +50,7 @@
 		F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchManager.swift; sourceTree = "<group>"; };
 		F0F7B7082A671EE3001F39BC /* FilterCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterCell.swift; sourceTree = "<group>"; };
 		F0F7B7092A671EE3001F39BC /* FilterCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FilterCell.xib; sourceTree = "<group>"; };
+		F0F7B70C2A6817DD001F39BC /* PopoverPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverPresenter.swift; sourceTree = "<group>"; };
 		FADB470C8862F752CBBA8996 /* Pods-Images search.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Images search.release.xcconfig"; path = "Target Support Files/Pods-Images search/Pods-Images search.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -122,6 +124,7 @@
 				F0DDB6D92A65672D00A86BC1 /* SearchManager.swift */,
 				F0C9BBDF2A5EA63400C8F5FD /* Assets.xcassets */,
 				F0C9BBE42A5EA63400C8F5FD /* Info.plist */,
+				F0F7B70C2A6817DD001F39BC /* PopoverPresenter.swift */,
 			);
 			path = "Images search";
 			sourceTree = "<group>";
@@ -280,6 +283,7 @@
 				F0D132332A61CBD10023FBE8 /* SelectImageTypeTableVC.swift in Sources */,
 				F0C9BBD72A5EA63100C8F5FD /* AppDelegate.swift in Sources */,
 				F09BCF6E2A5F391B00058E42 /* ImagePageVC.swift in Sources */,
+				F0F7B70D2A6817DD001F39BC /* PopoverPresenter.swift in Sources */,
 				F0855B652A667BE900405006 /* ImageGridCell.swift in Sources */,
 				F0DDB6DA2A65672D00A86BC1 /* SearchManager.swift in Sources */,
 				F0C9BBD92A5EA63100C8F5FD /* SceneDelegate.swift in Sources */,

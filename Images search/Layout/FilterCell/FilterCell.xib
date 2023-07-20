@@ -17,10 +17,9 @@
                 <rect key="frame" x="0.0" y="0.0" width="123" height="27"/>
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdr-Me-DXt">
-                        <rect key="frame" x="40" y="3" width="46" height="23"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <fontDescription key="fontDescription" type="system" pointSize="19"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Gdr-Me-DXt">
+                        <rect key="frame" x="5" y="2" width="113" height="23"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="18"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
@@ -28,6 +27,12 @@
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" red="0.88627450980392153" green="0.88627450980392153" blue="0.88627450980392153" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="Gdr-Me-DXt" firstAttribute="leading" secondItem="gTV-IL-0wX" secondAttribute="leading" constant="5" id="CAd-3o-H7e"/>
+                <constraint firstAttribute="bottom" secondItem="Gdr-Me-DXt" secondAttribute="bottom" constant="2" id="F3D-p6-owb"/>
+                <constraint firstAttribute="trailing" secondItem="Gdr-Me-DXt" secondAttribute="trailing" constant="5" id="k7Z-FX-8c1"/>
+                <constraint firstItem="Gdr-Me-DXt" firstAttribute="top" secondItem="gTV-IL-0wX" secondAttribute="top" constant="2" id="nr7-ui-63Q"/>
+            </constraints>
             <size key="customSize" width="123" height="27"/>
             <connections>
                 <outlet property="filterLabel" destination="Gdr-Me-DXt" id="4ee-Xn-WkL"/>

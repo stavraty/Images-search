@@ -13,6 +13,7 @@ class SearchVC: UIViewController {
     @IBOutlet weak var selectImageTypeButton: UIButton!
     
     var chosenImageType: String? = nil
+    private var searchManager = SearchManager()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +22,14 @@ class SearchVC: UIViewController {
         setupButtonBorder()
         setupTapGesture()
         setupSearchTextField()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showSearchResults", let destinationVC = segue.destination as? SearchResultsVC {
+            destinationVC.searchQuery = searchTF.text
+            destinationVC.imageType = chosenImageType
+            destinationVC.searchText = searchTF.text
+        }
     }
     
     func setupButtonBorder() {
@@ -51,18 +60,8 @@ class SearchVC: UIViewController {
     }
     
     @objc private func tapped() {
-        guard let popVC = storyboard?.instantiateViewController(withIdentifier: "popVC") as? SelectImageTypeTableVC else { return }
-        
-        popVC.modalPresentationStyle = .popover
-        popVC.delegate = self
-
-        let popOverVC = popVC.popoverPresentationController
-        popOverVC?.delegate = self
-        popOverVC?.sourceView = self.selectImageTypeButton
-        popOverVC?.sourceRect = CGRect(x: self.selectImageTypeButton.bounds.midX, y: self.selectImageTypeButton.bounds.minY, width: 0, height: 0)
-        popVC.preferredContentSize = CGSize(width: 250, height: 250)
-        
-        self.present(popVC, animated: true)
+        let popoverPresenter = PopoverPresenter(button: selectImageTypeButton, delegate: self, storyboard: storyboard!)
+        popoverPresenter.presentPopover()
     }
     
     @objc private func dismissKeyboard() {
@@ -70,12 +69,13 @@ class SearchVC: UIViewController {
     }
     
     @IBAction func searchButtonTapped(_ sender: Any) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if let searchResultsVC = storyboard.instantiateViewController(withIdentifier: "SearchResultsVC") as? SearchResultsVC {
-            let query = searchTF.text ?? ""
-            let imageType = chosenImageType ?? "all"
-            searchResultsVC.fetchImages(query: query, imageType: imageType)
-            navigationController?.pushViewController(searchResultsVC, animated: true)
+        let query = searchTF.text ?? ""
+        let imageType = chosenImageType ?? "all"
+        searchManager.fetchImages(query: query, imageType: imageType) {
+            // push view controller to navigation stack in main queue
+            DispatchQueue.main.async { [weak self] in
+                self?.performSegue(withIdentifier: "showSearchResults", sender: self)
+            }
         }
     }
 }
