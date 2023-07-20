@@ -40,7 +40,8 @@
                                             <constraint firstAttribute="height" constant="50" id="D6n-Un-Lek"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="magnifyingglass" catalog="system" title=" ">
+                                        <buttonConfiguration key="configuration" style="plain" title=" ">
+                                            <imageReference key="image" image="magnifyingglass" catalog="system" symbolScale="medium"/>
                                             <color key="baseForegroundColor" red="0.3411764705882353" green="0.3411764705882353" blue="0.3411764705882353" alpha="1" colorSpace="calibratedRGB"/>
                                         </buttonConfiguration>
                                     </button>
@@ -184,6 +185,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="7PR-eo-elG"/>
                     <connections>
+                        <outlet property="searchContainerView" destination="kH4-98-Ea4" id="vp6-od-fPh"/>
                         <outlet property="searchTF" destination="VYZ-It-pyA" id="nAI-WA-Asv"/>
                         <outlet property="selectImageTypeButton" destination="fNZ-7M-UHM" id="y50-6a-XqO"/>
                         <segue destination="dnI-Ox-9ds" kind="show" identifier="showSearchResults" id="ZFy-Uk-EAB"/>
@@ -262,7 +264,7 @@
                                             <constraint firstAttribute="width" constant="52" id="qaP-zQ-Aka"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="HeaderLogoIcon" title=" ">
+                                        <buttonConfiguration key="configuration" style="plain" image="HeaderLogoIcon">
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -344,8 +346,9 @@
                                             <constraint firstAttribute="height" constant="52" id="HG1-5T-zDP"/>
                                             <constraint firstAttribute="width" constant="52" id="qj7-cz-cgE"/>
                                         </constraints>
+                                        <inset key="imageEdgeInsets" minX="10" minY="10" maxX="10" maxY="10"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="plain" image="FilterIcon" title=" ">
+                                        <buttonConfiguration key="configuration" style="plain" image="FilterIcon">
                                             <preferredSymbolConfiguration key="preferredSymbolConfigurationForImage"/>
                                             <color key="baseForegroundColor" red="0.45490196078431372" green="0.45490196078431372" blue="0.45490196078431372" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </buttonConfiguration>
@@ -717,7 +720,9 @@
                         <outlet property="collectionView" destination="6Eh-VD-SEG" id="0zv-Fy-sA7"/>
                         <outlet property="filterButton" destination="zTP-Az-nKC" id="Ox9-R5-dVH"/>
                         <outlet property="filterCollectionView" destination="AqN-Gh-PuT" id="gb6-lO-9sw"/>
+                        <outlet property="goHomeButton" destination="79M-OG-xUy" id="9KR-78-pmy"/>
                         <outlet property="searchTF" destination="VeT-5g-fMj" id="DZr-K1-FCM"/>
+                        <outlet property="secondSearchContainerView" destination="5gP-Eq-bHN" id="X1z-mh-Z5s"/>
                         <outlet property="totalImagesCountLabel" destination="4gz-4S-Yu9" id="ZKd-xZ-yKM"/>
                     </connections>
                 </viewController>

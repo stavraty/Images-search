@@ -10,7 +10,9 @@ import UIKit
 class SearchResultsVC: UIViewController {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var goHomeButton: UIButton!
     @IBOutlet weak var filterCollectionView: UICollectionView!
+    @IBOutlet weak var secondSearchContainerView: UIView!
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var totalImagesCountLabel: UILabel!
@@ -40,6 +42,8 @@ class SearchResultsVC: UIViewController {
         setupGridView()
         setupTapGesture()
         fetchImages()
+        setupButtons()
+        setupSearchView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -66,6 +70,32 @@ class SearchResultsVC: UIViewController {
         self.filterCollectionView.dataSource = self
         self.filterCollectionView.delegate = self
         searchTF.delegate = self
+    }
+    
+    private func setupButtons() {
+        setupGoHomeButton()
+        setupFilterButton()
+    }
+
+    private func setupGoHomeButton() {
+        goHomeButton.setTitle("", for: .normal)
+        goHomeButton.layer.cornerRadius = 5
+        goHomeButton.clipsToBounds = true
+    }
+
+    private func setupFilterButton() {
+        filterButton.setTitle("", for: .normal)
+        filterButton.layer.cornerRadius = 5
+        filterButton.clipsToBounds = true
+        filterButton.layer.borderWidth = 1.0
+        filterButton.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
+    }
+    
+    func setupSearchView() {
+        secondSearchContainerView.layer.cornerRadius = 5
+        secondSearchContainerView.clipsToBounds = true
+        secondSearchContainerView.layer.borderWidth = 1.0
+        secondSearchContainerView.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
     }
     
     func registerCells() {

@@ -11,6 +11,7 @@ class SearchVC: UIViewController {
 
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var selectImageTypeButton: UIButton!
+    @IBOutlet weak var searchContainerView: UIView!
     
     var chosenImageType: String? = nil
     private var searchManager = SearchManager()
@@ -22,6 +23,7 @@ class SearchVC: UIViewController {
         setupButtonBorder()
         setupTapGesture()
         setupSearchTextField()
+        setupSearchView()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -51,6 +53,11 @@ class SearchVC: UIViewController {
     func setupSearchTextField() {
         searchTF.delegate = self
         searchTF.returnKeyType = .search
+    }
+    
+    func setupSearchView() {
+        searchContainerView.layer.cornerRadius = 5
+        searchContainerView.clipsToBounds = true
     }
     
     private func setupGestures() {
