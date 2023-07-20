@@ -270,3 +270,10 @@ extension SearchResultsVC: UITextFieldDelegate {
         return true
     }
 }
+
+extension SearchResultsVC: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+

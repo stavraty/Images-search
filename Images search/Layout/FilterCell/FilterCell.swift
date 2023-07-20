@@ -25,6 +25,9 @@ class FilterCell: UICollectionViewCell {
             filterLabel.textColor = .black
             self.backgroundColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00)
         }
+        
+        self.layer.cornerRadius = 5
+        self.clipsToBounds = true
     }
 }
 
