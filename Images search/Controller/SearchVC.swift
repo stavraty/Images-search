@@ -72,7 +72,6 @@ class SearchVC: UIViewController {
         let query = searchTF.text ?? ""
         let imageType = chosenImageType ?? "all"
         searchManager.fetchImages(query: query, imageType: imageType) {
-            // push view controller to navigation stack in main queue
             DispatchQueue.main.async { [weak self] in
                 self?.performSegue(withIdentifier: "showSearchResults", sender: self)
             }

@@ -21,30 +21,25 @@ class SearchResultsVC: UIViewController {
     private var query: String?
     private var estimateWidth = 160.0
     private var cellMarginSize = 16.0
-    var filters = Set<String>()
+    private var chosenImageType: String?
+    private var selectedFilterIndex: Int = 0
+    private var selectedFilter: String = "Related"
+    private var selectedTag: String?
+    var filters: [String] = []
     var searchManager: SearchManager!
-    var chosenImageType: String?
-    
+    var searchText: String?
     var searchQuery: String?
     var imageType: String?
-    var searchText: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.filterCollectionView.dataSource = self
-        self.filterCollectionView.delegate = self
-
+        setupView()
+        setupDelegates()
         registerCells()
-        self.setupGridView()
-        
+        setupGridView()
+        setupTapGesture()
         fetchImages()
-        
-        searchTF.delegate = self
-        searchTF.returnKeyType = .search
-        searchTF.text = searchText
     }
     
     override func viewDidLayoutSubviews() {
@@ -60,16 +55,43 @@ class SearchResultsVC: UIViewController {
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
     }
     
+    private func setupView() {
+        searchTF.returnKeyType = .search
+        searchTF.text = searchText
+    }
+
+    private func setupDelegates() {
+        self.collectionView.dataSource = self
+        self.collectionView.delegate = self
+        self.filterCollectionView.dataSource = self
+        self.filterCollectionView.delegate = self
+        searchTF.delegate = self
+    }
+    
     func registerCells() {
         collectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
         filterCollectionView.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
-
+    }
+    
+    func setupGridView() {
+        let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
+        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
+        let width = self.calculateWith()
+        flow.estimatedItemSize = CGSize(width: width, height: width)
+    }
+    
+    func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
     }
     
     func fetchImages() {
         self.query = searchQuery ?? ""
         self.imageType = imageType ?? "all"
         self.filters.removeAll()
+        self.filters.append(selectedTag ?? "Related")
         fetchNextPage()
     }
     
@@ -88,15 +110,21 @@ class SearchResultsVC: UIViewController {
                     let tags = image.tags.split(separator: ",")
                     tempTags.append(contentsOf: tags.map { String($0) })
                 }
-                let uniqueTags = Array(Set(tempTags))  // remove duplicates
-                self?.filters = Set(uniqueTags.prefix(50))  // take the first 50
+                
+                let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
+                self?.filters.append(contentsOf: uniqueTags.filter { $0 != self?.selectedTag })
 
                 self?.currentPage += 1
                 DispatchQueue.main.async {
                     self?.collectionView.reloadData()
                     self?.filterCollectionView.reloadData()
                     self?.setupGridView()
-                    self?.totalImagesCountLabel.text = "\(pixabayResponse.total) Free Images"
+
+                    let numberFormatter = NumberFormatter()
+                    numberFormatter.numberStyle = .decimal
+                    let formattedTotal = numberFormatter.string(from: NSNumber(value: pixabayResponse.total)) ?? "0"
+
+                    self?.totalImagesCountLabel.text = "\(formattedTotal) Free Images"
                     (self?.collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.invalidateLayout()
                 }
             case .failure(let error):
@@ -105,12 +133,8 @@ class SearchResultsVC: UIViewController {
         }
     }
     
-    func setupGridView() {
-        let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
-        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
-        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
-        let width = self.calculateWith()
-        flow.estimatedItemSize = CGSize(width: width, height: width)
+    @objc private func dismissKeyboard() {
+        view.endEditing(true)
     }
 
     @IBAction func goHomeButtonTapped(_ sender: Any) {
@@ -143,8 +167,8 @@ extension SearchResultsVC: UICollectionViewDataSource {
             return cell ?? UICollectionViewCell()
         } else if collectionView == self.filterCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell
-            let filter = Array(filters)[indexPath.row]
-            cell?.configure(with: filter)
+            let filter = filters[indexPath.row]
+            cell?.configure(with: filter, isSelected: indexPath.row == selectedFilterIndex)
             return cell ?? UICollectionViewCell()
         }
         return UICollectionViewCell()
@@ -175,11 +199,18 @@ extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
 extension SearchResultsVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.filterCollectionView {
-            let filter = Array(filters)[indexPath.row]
-            self.images = []
-            self.currentPage = 1
-            self.searchQuery = filter
-            self.fetchImages()
+            if indexPath.row != 0 {
+                selectedTag = filters[indexPath.row]
+                
+                filters = filters.filter { $0 != selectedTag }
+                filters.insert(selectedTag ?? "Related", at: 0)
+                
+                collectionView.reloadData()
+                self.images = []
+                self.currentPage = 1
+                self.searchQuery = selectedTag
+                fetchImages()
+            }
         }
     }
 }
