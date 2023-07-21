@@ -27,19 +27,34 @@
                         <rect key="frame" x="79" y="79" width="43" height="43"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                     </activityIndicatorView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eeW-vY-6mL">
+                        <rect key="frame" x="156" y="15" width="32" height="32"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="32" id="mu6-52-UjJ"/>
+                            <constraint firstAttribute="width" constant="32" id="nsm-a0-CLM"/>
+                        </constraints>
+                        <state key="normal" title="Button"/>
+                        <buttonConfiguration key="configuration" style="plain" image="shareButton"/>
+                    </button>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <color key="backgroundColor" systemColor="systemMintColor"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="eeW-vY-6mL" secondAttribute="trailing" constant="12" id="Cxf-d0-KSR"/>
+                <constraint firstAttribute="top" secondItem="eeW-vY-6mL" secondAttribute="top" constant="-15" id="LLC-8s-BHx"/>
+            </constraints>
             <size key="customSize" width="200" height="200"/>
             <connections>
                 <outlet property="activityIndicator" destination="zTe-tX-eZq" id="1cl-qJ-pcT"/>
                 <outlet property="imageView" destination="wve-Hg-kkG" id="QyS-Ao-Anx"/>
+                <outlet property="shareButton" destination="eeW-vY-6mL" id="rhF-5b-vXb"/>
             </connections>
             <point key="canvasLocation" x="244.27480916030532" y="-7.746478873239437"/>
         </collectionViewCell>
     </objects>
     <resources>
+        <image name="shareButton" width="40" height="40"/>
         <systemColor name="systemMintColor">
             <color red="0.0" green="0.7803921568627451" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

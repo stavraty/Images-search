@@ -91,7 +91,7 @@ class SearchResultsVC: UIViewController {
         filterButton.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
     }
     
-    func setupSearchView() {
+    private func setupSearchView() {
         secondSearchContainerView.layer.cornerRadius = 5
         secondSearchContainerView.clipsToBounds = true
         secondSearchContainerView.layer.borderWidth = 1.0
@@ -190,10 +190,11 @@ extension SearchResultsVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageGridCell", for: indexPath) as? ImageGridCell
-            guard let imageURL = URL(string: images[indexPath.row].webformatURL) else {
+            let image = images[indexPath.row]
+            guard let imageURL = URL(string: image.webformatURL) else {
                 return UICollectionViewCell()
             }
-            cell?.setImage(with: imageURL)
+            cell?.setImage(with: imageURL, pageURL: image.pageURL)
             return cell ?? UICollectionViewCell()
         } else if collectionView == self.filterCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell
@@ -203,6 +204,7 @@ extension SearchResultsVC: UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
+
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView && indexPath.row == images.count - 1 {
