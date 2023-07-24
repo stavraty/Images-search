@@ -13,16 +13,24 @@ class ImageGridCell: UICollectionViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var shareButton: UIButton!
     private var pageURL: String?
+    private var largeImageURL: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupButton()
+        configure()
+    }
+    
+    func configure() {
+        self.layer.cornerRadius = 5
+        self.clipsToBounds = true
     }
 
-    func setImage(with url: URL, pageURL: String) {
+    func setImage(with url: URL, pageURL: String, largeImageURL: String){
         hideShareButton()
         activityIndicator.startAnimating()
         self.pageURL = pageURL
+        self.largeImageURL = largeImageURL
         imageView.sd_setImage(with: url) { [weak self] (_, _, _, _) in
             self?.activityIndicator.stopAnimating()
             self?.showShareButton()

@@ -12,6 +12,7 @@
 		F0855B662A667BE900405006 /* ImageGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0855B642A667BE900405006 /* ImageGridCell.xib */; };
 		F08871982A614E2300161EB7 /* PixabayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08871972A614E2300161EB7 /* PixabayResponse.swift */; };
 		F088719A2A614FD100161EB7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08871992A614FD100161EB7 /* APIService.swift */; };
+		F09159162A6B0D9D0084CE77 /* BaseVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09159152A6B0D9D0084CE77 /* BaseVC.swift */; };
 		F09BCF6C2A5F381600058E42 /* SearchResultsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09BCF6B2A5F381600058E42 /* SearchResultsVC.swift */; };
 		F09BCF6E2A5F391B00058E42 /* ImagePageVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */; };
 		F0C9BBD72A5EA63100C8F5FD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C9BBD62A5EA63100C8F5FD /* AppDelegate.swift */; };
@@ -35,6 +36,7 @@
 		F0855B642A667BE900405006 /* ImageGridCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageGridCell.xib; sourceTree = "<group>"; };
 		F08871972A614E2300161EB7 /* PixabayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayResponse.swift; sourceTree = "<group>"; };
 		F08871992A614FD100161EB7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		F09159152A6B0D9D0084CE77 /* BaseVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseVC.swift; sourceTree = "<group>"; };
 		F09BCF6B2A5F381600058E42 /* SearchResultsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsVC.swift; sourceTree = "<group>"; };
 		F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageVC.swift; sourceTree = "<group>"; };
 		F0C9BBD32A5EA63100C8F5FD /* Images search.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Images search.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -146,6 +148,7 @@
 				F09BCF6B2A5F381600058E42 /* SearchResultsVC.swift */,
 				F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */,
 				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */,
+				F09159152A6B0D9D0084CE77 /* BaseVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -281,6 +284,7 @@
 				F088719A2A614FD100161EB7 /* APIService.swift in Sources */,
 				F09BCF6C2A5F381600058E42 /* SearchResultsVC.swift in Sources */,
 				F0D132332A61CBD10023FBE8 /* SelectImageTypeTableVC.swift in Sources */,
+				F09159162A6B0D9D0084CE77 /* BaseVC.swift in Sources */,
 				F0C9BBD72A5EA63100C8F5FD /* AppDelegate.swift in Sources */,
 				F09BCF6E2A5F391B00058E42 /* ImagePageVC.swift in Sources */,
 				F0F7B70D2A6817DD001F39BC /* PopoverPresenter.swift in Sources */,

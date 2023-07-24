@@ -168,7 +168,7 @@ class SearchResultsVC: UIViewController {
     }
 
     @IBAction func goHomeButtonTapped(_ sender: Any) {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true) //popToRootViewController(animated: true)
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
@@ -194,7 +194,7 @@ extension SearchResultsVC: UICollectionViewDataSource {
             guard let imageURL = URL(string: image.webformatURL) else {
                 return UICollectionViewCell()
             }
-            cell?.setImage(with: imageURL, pageURL: image.pageURL)
+            cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL)
             return cell ?? UICollectionViewCell()
         } else if collectionView == self.filterCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell
@@ -243,6 +243,18 @@ extension SearchResultsVC: UICollectionViewDelegate {
                 self.searchQuery = selectedTag
                 fetchImages()
             }
+        } else if collectionView == self.collectionView {
+            let selectedImageURL = URL(string: images[indexPath.row].largeImageURL)
+            openImagePageVC(with: selectedImageURL)
+        }
+    }
+    
+    func openImagePageVC(with imageURL: URL?) {
+        guard let imageURL = imageURL else { return }
+
+        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageVC") as? ImagePageVC {
+            imagePageVC.largeImageURL = imageURL
+            self.navigationController?.pushViewController(imagePageVC, animated: true)
         }
     }
 }
@@ -278,4 +290,3 @@ extension SearchResultsVC: UIPopoverPresentationControllerDelegate {
         return .none
     }
 }
-
