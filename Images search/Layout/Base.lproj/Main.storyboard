@@ -1071,6 +1071,9 @@
                                     <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     <color key="baseBackgroundColor" red="0.2627450980392157" green="0.043137254901960784" blue="0.8784313725490196" alpha="1" colorSpace="calibratedRGB"/>
                                 </buttonConfiguration>
+                                <connections>
+                                    <action selector="downloadButtonTapped:" destination="MVC-cq-XMX" eventType="touchUpInside" id="kq6-Sd-RZy"/>
+                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gyN-qx-mZh">
                                 <rect key="frame" x="0.0" y="530" width="393" height="322"/>
@@ -1264,6 +1267,7 @@
                         <outlet property="filterButton" destination="NNd-E8-hSR" id="pm4-y0-1te"/>
                         <outlet property="goHomeButton" destination="wwh-Ms-ILp" id="UZJ-qr-VrY"/>
                         <outlet property="headerView" destination="9tr-cW-Xf1" id="kNn-2r-qLm"/>
+                        <outlet property="photoFormatLabel" destination="5ga-KD-7Bo" id="dBr-ef-RFY"/>
                         <outlet property="searchTF" destination="QYU-dM-Gik" id="gl5-Sm-wB2"/>
                         <outlet property="secondSearchContainerView" destination="DVq-rA-qns" id="7xC-VA-dIk"/>
                         <outlet property="selectedImage" destination="NGY-sa-koG" id="nBy-2h-q0t"/>
