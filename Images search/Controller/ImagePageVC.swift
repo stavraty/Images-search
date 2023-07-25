@@ -17,7 +17,6 @@ class ImagePageVC: BaseVC {
     
     var largeImageURL: URL?
     private let imageCacheService = ImageCacheService.shared
-    private var currentScale: CGFloat = 1.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,6 +33,15 @@ class ImagePageVC: BaseVC {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         loadLargeImage()
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showImageZoomViewSegue" {
+            if let destinationVC = segue.destination as? ImageZoomVC {
+                // destinationVC.zoomedImage = selectedImage.image
+                destinationVC.largeImageURL = largeImageURL
+            }
+        }
     }
     
     private func setupActivityIndicator() {
@@ -65,28 +73,17 @@ class ImagePageVC: BaseVC {
     }
     
     @IBAction func zoomButtonTapped(_ sender: Any) {
-        print(largeImageURL)
-//        currentScale = min(currentScale + 2.0, 10.0)
-//        updateImageScale()
+        performSegue(withIdentifier: "showImageZoomViewSegue", sender: nil)
     }
-    
-    private func updateImageScale() {
-        guard let originalImage = selectedImage.image else {
+    @IBAction func shareButtonTapped(_ sender: Any) {
+        guard let imageURL = largeImageURL else {
             return
         }
         
-        let scaledImage = scaleImage(originalImage, scale: currentScale)
-        selectedImage.image = scaledImage
+        let activityViewController = UIActivityViewController(activityItems: [imageURL], applicationActivities: nil)
+        if let presenter = UIApplication.shared.windows.first?.rootViewController {
+            presenter.present(activityViewController, animated: true, completion: nil)
+        }
     }
     
-    private func scaleImage(_ image: UIImage, scale: CGFloat) -> UIImage? {
-        let size = CGSize(width: image.size.width * scale, height: image.size.height * scale)
-        
-        UIGraphicsBeginImageContextWithOptions(size, false, 0.0)
-        image.draw(in: CGRect(origin: .zero, size: size))
-        let scaledImage = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-        
-        return scaledImage
-    }
 }

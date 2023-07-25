@@ -1057,6 +1057,7 @@
                                 <buttonConfiguration key="configuration" style="plain" image="zoomButton"/>
                                 <connections>
                                     <action selector="zoomButtonTapped:" destination="MVC-cq-XMX" eventType="touchUpInside" id="Jkq-po-ikK"/>
+                                    <segue destination="WUj-N3-3bx" kind="show" identifier="showImageZoomViewSegue" animates="NO" id="3kf-tJ-aYj"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bal-uP-xzj">
@@ -1154,6 +1155,9 @@
                                             <fontDescription key="titleFontDescription" type="system" pointSize="14"/>
                                             <color key="baseForegroundColor" red="0.1764705882352941" green="0.1764705882352941" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                                         </buttonConfiguration>
+                                        <connections>
+                                            <action selector="shareButtonTapped:" destination="MVC-cq-XMX" eventType="touchUpInside" id="niK-Jc-Bwa"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                             </stackView>
@@ -1206,9 +1210,9 @@
                                 <exclude reference="rfu-gL-g9N"/>
                                 <exclude reference="tbp-HI-hfp"/>
                                 <exclude reference="yLF-2o-WZi"/>
-                                <exclude reference="qZa-zU-B1j"/>
                                 <exclude reference="Xyq-8P-yFW"/>
                                 <exclude reference="ZLP-59-ew5"/>
+                                <exclude reference="qZa-zU-B1j"/>
                                 <exclude reference="WJa-Ke-yeu"/>
                                 <exclude reference="X2x-dx-nb4"/>
                                 <exclude reference="ZFT-1e-BHf"/>
@@ -1235,9 +1239,9 @@
                                 <include reference="R9y-0Z-pCa"/>
                                 <include reference="RWU-ub-g40"/>
                                 <include reference="rfu-gL-g9N"/>
-                                <include reference="qZa-zU-B1j"/>
                                 <include reference="Xyq-8P-yFW"/>
                                 <include reference="ZLP-59-ew5"/>
+                                <include reference="qZa-zU-B1j"/>
                                 <include reference="WJa-Ke-yeu"/>
                                 <include reference="X2x-dx-nb4"/>
                                 <include reference="ZFT-1e-BHf"/>
@@ -1269,7 +1273,69 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ni2-dE-PmP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2649.6183206106871" y="-34.507042253521128"/>
+            <point key="canvasLocation" x="2611" y="-34"/>
+        </scene>
+        <!--Image ZoomVC-->
+        <scene sceneID="fHf-0b-gwn">
+            <objects>
+                <viewController storyboardIdentifier="ImageZoomVС" id="WUj-N3-3bx" customClass="ImageZoomVC" customModule="Images_search" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="mAO-fJ-hyN">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ACf-vM-ohh">
+                                <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="urX-XE-918">
+                                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                                    </imageView>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="n7r-bK-lra">
+                                        <rect key="frame" x="290" y="8" width="91" height="35"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Close" imagePadding="10">
+                                            <imageReference key="image" image="xmark" catalog="system" symbolScale="small"/>
+                                            <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <color key="baseBackgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="closeButtonTapped:" destination="WUj-N3-3bx" eventType="touchUpInside" id="Ycz-Zx-74p"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="urX-XE-918" firstAttribute="height" secondItem="M23-ea-HpI" secondAttribute="height" id="05c-x8-e3S"/>
+                                    <constraint firstItem="urX-XE-918" firstAttribute="width" secondItem="M23-ea-HpI" secondAttribute="width" id="84T-qE-8Vq"/>
+                                    <constraint firstItem="urX-XE-918" firstAttribute="bottom" secondItem="H0g-Mp-M6A" secondAttribute="bottom" id="8bB-FW-9Fz"/>
+                                    <constraint firstItem="urX-XE-918" firstAttribute="trailing" secondItem="H0g-Mp-M6A" secondAttribute="trailing" id="GK0-7f-fvh"/>
+                                    <constraint firstItem="urX-XE-918" firstAttribute="leading" secondItem="H0g-Mp-M6A" secondAttribute="leading" id="SQK-hh-kUK"/>
+                                    <constraint firstItem="H0g-Mp-M6A" firstAttribute="top" secondItem="urX-XE-918" secondAttribute="top" id="uJP-zs-hrf"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="H0g-Mp-M6A"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="M23-ea-HpI"/>
+                            </scrollView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eKo-6z-ies"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="ACf-vM-ohh" secondAttribute="bottom" id="6nN-eS-UGS"/>
+                            <constraint firstItem="n7r-bK-lra" firstAttribute="top" secondItem="eKo-6z-ies" secondAttribute="top" constant="8" id="ays-Ca-dUS"/>
+                            <constraint firstItem="eKo-6z-ies" firstAttribute="trailing" secondItem="n7r-bK-lra" secondAttribute="trailing" constant="12" id="c1S-f0-nqx"/>
+                            <constraint firstItem="ACf-vM-ohh" firstAttribute="trailing" secondItem="eKo-6z-ies" secondAttribute="trailing" id="h1G-db-m65"/>
+                            <constraint firstItem="ACf-vM-ohh" firstAttribute="top" secondItem="mAO-fJ-hyN" secondAttribute="top" id="jfv-jB-edO"/>
+                            <constraint firstItem="ACf-vM-ohh" firstAttribute="leading" secondItem="eKo-6z-ies" secondAttribute="leading" id="vdy-1U-Dsu"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="nk6-QJ-gec"/>
+                    <connections>
+                        <outlet property="imageView" destination="urX-XE-918" id="GRi-lC-bjc"/>
+                        <outlet property="scrollView" destination="ACf-vM-ohh" id="AYv-9V-GRN"/>
+                        <segue destination="VSe-2o-aSw" kind="unwind" identifier="unwindToImagePageVC" unwindAction="unwindToImagePageVC:" id="7kh-q3-mSB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="S1N-Sb-gw4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="VSe-2o-aSw" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3420.6106870229005" y="-32.394366197183103"/>
         </scene>
     </scenes>
     <resources>
@@ -1280,6 +1346,7 @@
         <image name="goHomeButtonIcon" width="52" height="52"/>
         <image name="magnifyingglass" catalog="system" width="128" height="117"/>
         <image name="shareImg" width="13" height="14"/>
+        <image name="xmark" catalog="system" width="128" height="113"/>
         <image name="zoomButton" width="40" height="40"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

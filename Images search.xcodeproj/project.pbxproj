@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		468EE1F1E7AD5F99B8388EA0 /* Pods_Images_search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE1253E164F6D0442419638 /* Pods_Images_search.framework */; };
+		F06B4F112A6F04B9003D6046 /* ImageZoomVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06B4F102A6F04B9003D6046 /* ImageZoomVC.swift */; };
 		F0855B652A667BE900405006 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0855B632A667BE900405006 /* ImageGridCell.swift */; };
 		F0855B662A667BE900405006 /* ImageGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0855B642A667BE900405006 /* ImageGridCell.xib */; };
 		F08871982A614E2300161EB7 /* PixabayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08871972A614E2300161EB7 /* PixabayResponse.swift */; };
@@ -32,6 +33,7 @@
 /* Begin PBXFileReference section */
 		205375BB9877D4340F0B4186 /* Pods-Images search.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Images search.debug.xcconfig"; path = "Target Support Files/Pods-Images search/Pods-Images search.debug.xcconfig"; sourceTree = "<group>"; };
 		4AE1253E164F6D0442419638 /* Pods_Images_search.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Images_search.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F06B4F102A6F04B9003D6046 /* ImageZoomVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomVC.swift; sourceTree = "<group>"; };
 		F0855B632A667BE900405006 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
 		F0855B642A667BE900405006 /* ImageGridCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageGridCell.xib; sourceTree = "<group>"; };
 		F08871972A614E2300161EB7 /* PixabayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayResponse.swift; sourceTree = "<group>"; };
@@ -149,6 +151,7 @@
 				F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */,
 				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */,
 				F09159152A6B0D9D0084CE77 /* BaseVC.swift */,
+				F06B4F102A6F04B9003D6046 /* ImageZoomVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -286,6 +289,7 @@
 				F0D132332A61CBD10023FBE8 /* SelectImageTypeTableVC.swift in Sources */,
 				F09159162A6B0D9D0084CE77 /* BaseVC.swift in Sources */,
 				F0C9BBD72A5EA63100C8F5FD /* AppDelegate.swift in Sources */,
+				F06B4F112A6F04B9003D6046 /* ImageZoomVC.swift in Sources */,
 				F09BCF6E2A5F391B00058E42 /* ImagePageVC.swift in Sources */,
 				F0F7B70D2A6817DD001F39BC /* PopoverPresenter.swift in Sources */,
 				F0855B652A667BE900405006 /* ImageGridCell.swift in Sources */,
