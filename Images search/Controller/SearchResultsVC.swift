@@ -16,6 +16,7 @@ class SearchResultsVC: UIViewController {
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var totalImagesCountLabel: UILabel!
+    @IBOutlet weak var headerView: UIView!
     
     private let api = APIService()
     private var images: [PixabayResponse.Image] = []

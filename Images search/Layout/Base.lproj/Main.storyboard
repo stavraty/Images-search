@@ -753,6 +753,7 @@
                         <outlet property="filterButton" destination="zTP-Az-nKC" id="Ox9-R5-dVH"/>
                         <outlet property="filterCollectionView" destination="AqN-Gh-PuT" id="gb6-lO-9sw"/>
                         <outlet property="goHomeButton" destination="79M-OG-xUy" id="9KR-78-pmy"/>
+                        <outlet property="headerView" destination="qiP-49-mQL" id="o1J-IR-ekS"/>
                         <outlet property="searchTF" destination="VeT-5g-fMj" id="DZr-K1-FCM"/>
                         <outlet property="secondSearchContainerView" destination="5gP-Eq-bHN" id="X1z-mh-Z5s"/>
                         <outlet property="totalImagesCountLabel" destination="4gz-4S-Yu9" id="ZKd-xZ-yKM"/>

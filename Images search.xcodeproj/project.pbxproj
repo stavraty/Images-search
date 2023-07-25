@@ -150,8 +150,8 @@
 				F09BCF6B2A5F381600058E42 /* SearchResultsVC.swift */,
 				F09BCF6D2A5F391B00058E42 /* ImagePageVC.swift */,
 				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableVC.swift */,
-				F09159152A6B0D9D0084CE77 /* BaseVC.swift */,
 				F06B4F102A6F04B9003D6046 /* ImageZoomVC.swift */,
+				F09159152A6B0D9D0084CE77 /* BaseVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
