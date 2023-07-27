@@ -11,7 +11,6 @@ import Photos
 class ImagePageVC: BaseVC {
     
     @IBOutlet weak var selectedImage: UIImageView!
-    //@IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var zoomButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
@@ -19,8 +18,13 @@ class ImagePageVC: BaseVC {
     @IBOutlet weak var previewCollectionView: UICollectionView!
     
     var largeImageURL: URL?
-    private let imageCacheService = ImageCacheService.shared
-    private var previews: [URL] = []
+    let imageCacheService = ImageCacheService.shared
+    var previews: [URL] = []
+    var selectedImageURL: URL?
+    private var isImageLoaded = false
+    
+    private var estimateWidth = 95.0
+    private var cellMarginSize = 16.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,21 +33,32 @@ class ImagePageVC: BaseVC {
         updatePhotoFormatLabel()
         registerCells()
         setupPreviewCollectionView()
+        previewCollectionView.delegate = self
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        loadLargeImage()
-        // loadPreviews()
+        if let url = largeImageURL {
+            loadLargeImage(withURL: url)
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showImageZoomViewSegue" {
             if let destinationVC = segue.destination as? ImageZoomVC {
-                destinationVC.largeImageURL = largeImageURL
+                destinationVC.largeImageURL = selectedImageURL
             }
         }
+    }
+    
+    override func setupGridView() {
+        let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
+        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
+        let width = self.calculateWith()
+        flow.estimatedItemSize = CGSize(width: width, height: width)
     }
     
     private func setupActivityIndicator() {
@@ -59,29 +74,26 @@ class ImagePageVC: BaseVC {
         shareButton.layer.borderColor = UIColor(red: 0.26, green: 0.04, blue: 0.88, alpha: 1.00).cgColor
     }
     
-    private func loadLargeImage() {
-        guard let imageURL = largeImageURL else {
-            return
-        }
-        
+    private func loadLargeImage(withURL url: URL) {
         activityIndicator.startAnimating()
         activityIndicator.isHidden = false
         
-        imageCacheService.loadImage(url: imageURL) { [weak self] image in
+        imageCacheService.loadImage(url: url) { [weak self] image in
             if let image = image {
                 DispatchQueue.main.async {
                     self?.selectedImage.image = image
                     self?.activityIndicator.stopAnimating()
                     self?.activityIndicator.isHidden = true
+                    self?.selectedImageURL = url
                 }
             } else {
-                print("Не вдалося завантажити зображення з URL: \(imageURL)")
+                print("Failed to load image from URL: \(url)")
                 self?.activityIndicator.stopAnimating()
                 self?.activityIndicator.isHidden = true
             }
         }
     }
-    
+
     private func getImageFormat(from url: URL) -> String? {
         let pathExtension = url.pathExtension.lowercased()
         switch pathExtension {
@@ -148,14 +160,11 @@ class ImagePageVC: BaseVC {
         previewCollectionView.delegate = self
         previewCollectionView.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
     }
-    
-//    private func loadPreviews() {
-//        // Завантаження попередніх зображень з відповідних URL
-//        previews = [...] // Ваші URL попередніх зображень
-//        previewCollectionView.reloadData()
-//    }
 
     @IBAction func zoomButtonTapped(_ sender: Any) {
+        guard isImageLoaded, let imageURL = largeImageURL else {
+            return
+        }
         performSegue(withIdentifier: "showImageZoomViewSegue", sender: nil)
     }
     
@@ -178,6 +187,21 @@ class ImagePageVC: BaseVC {
     }
 }
 
+extension ImagePageVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = self.calculateWith()
+        return CGSize(width: width, height: width)
+    }
+
+    func calculateWith() -> CGFloat {
+        let estimateWidth = CGFloat(estimateWidth)
+        let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
+        let margin = CGFloat(cellMarginSize * 2)
+        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
+        return width
+    }
+}
+
 extension ImagePageVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return previews.count
@@ -193,8 +217,7 @@ extension ImagePageVC: UICollectionViewDataSource {
 
 extension ImagePageVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        // Виконайте код, що пов'язаний з обробкою натискання на комірку
         let selectedPreviewURL = previews[indexPath.item]
-        // Додайте вашу логіку для обробки натискання на попереднє зображення
+        loadLargeImage(withURL: selectedPreviewURL)
     }
 }

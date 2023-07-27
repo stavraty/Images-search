@@ -46,7 +46,7 @@ class ImageZoomVC: UIViewController {
                     self?.updateScrollViewContentSize()
                 }
             } else {
-                print("Не вдалося завантажити зображення з URL: \(imageURL)")
+                print("Failed to load image from URL: \(imageURL)")
             }
         }
     }

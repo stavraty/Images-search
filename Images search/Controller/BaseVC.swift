@@ -20,6 +20,7 @@ class BaseVC: UIViewController {
 
     let api = APIService()
     var searchManager: SearchManager!
+    // let searchManager = SearchManager()
     var images: [PixabayResponse.Image] = []
     var chosenImageType: String?
     var currentPage = 1

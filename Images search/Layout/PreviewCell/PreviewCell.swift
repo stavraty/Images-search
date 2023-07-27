@@ -9,6 +9,7 @@ import UIKit
 
 class PreviewCell: UICollectionViewCell {
     
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var imageView: UIImageView!
     
     private var previewURL: String?
@@ -18,12 +19,12 @@ class PreviewCell: UICollectionViewCell {
     }
 
     func setImage(with previewURL: URL) {
-        // Використовуйте бібліотеку SDWebImage для завантаження та кешування зображення з URL.
+        activityIndicator.startAnimating()
         imageView.sd_setImage(with: previewURL, completed: { [weak self] (image, error, cacheType, imageURL) in
             if let error = error {
                 print("Failed to load image: \(error.localizedDescription)")
             } else {
-                // Зображення успішно завантажено та встановлено, тут ви можете виконати додаткові дії, якщо потрібно.
+                self?.activityIndicator.stopAnimating()
             }
         })
     }

@@ -21,11 +21,19 @@
                         <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                     </imageView>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="oVh-cB-A4o">
+                        <rect key="frame" x="40" y="40" width="20" height="20"/>
+                    </activityIndicatorView>
                 </subviews>
             </view>
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
+            <constraints>
+                <constraint firstItem="oVh-cB-A4o" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="3IM-lv-LHl"/>
+                <constraint firstItem="oVh-cB-A4o" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="G3U-jb-fXj"/>
+            </constraints>
             <size key="customSize" width="100" height="100"/>
             <connections>
+                <outlet property="activityIndicator" destination="oVh-cB-A4o" id="fP8-6u-cbz"/>
                 <outlet property="imageView" destination="hR8-lj-yfg" id="Svp-lc-uwo"/>
             </connections>
             <point key="canvasLocation" x="167.93893129770993" y="-14.788732394366198"/>

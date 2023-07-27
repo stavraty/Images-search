@@ -11,6 +11,7 @@ class SearchResultsVC: BaseVC {
     
     private var estimateWidth = 160.0
     private var cellMarginSize = 16.0
+    var previews: [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,6 +56,7 @@ class SearchResultsVC: BaseVC {
         self.imageType = imageType ?? "all"
         self.filters.removeAll()
         self.filters.append(selectedTag ?? "Related")
+        self.previews.removeAll()
         fetchNextPage()
     }
 
@@ -72,6 +74,12 @@ class SearchResultsVC: BaseVC {
                 for image in pixabayResponse.hits {
                     let tags = image.tags.split(separator: ",")
                     tempTags.append(contentsOf: tags.map { String($0) })
+                }
+                
+                for image in pixabayResponse.hits {
+                    if let previewURL = URL(string: image.previewURL) {
+                        self?.previews.append(previewURL)
+                    }
                 }
 
                 let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
@@ -174,6 +182,7 @@ extension SearchResultsVC: UICollectionViewDelegate {
 
         if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageVC") as? ImagePageVC {
             imagePageVC.largeImageURL = imageURL
+            imagePageVC.previews = previews
             self.navigationController?.pushViewController(imagePageVC, animated: true)
         }
     }
