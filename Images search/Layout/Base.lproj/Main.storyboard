@@ -1033,9 +1033,9 @@
                                 </variation>
                             </view>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="NGY-sa-koG">
-                                <rect key="frame" x="0.0" y="134" width="393" height="220"/>
+                                <rect key="frame" x="0.0" y="134" width="393" height="240"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="220" id="Lsd-99-8dP"/>
+                                    <constraint firstAttribute="height" constant="240" id="Lsd-99-8dP"/>
                                 </constraints>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -1049,7 +1049,7 @@
                                 </variation>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q2u-h0-Ucx">
-                                <rect key="frame" x="345" y="306" width="32" height="32"/>
+                                <rect key="frame" x="345" y="326" width="32" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="32" id="FVw-1N-nun"/>
                                     <constraint firstAttribute="height" constant="32" id="Pnw-uq-9NO"/>
@@ -1062,7 +1062,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bal-uP-xzj">
-                                <rect key="frame" x="16" y="462" width="361" height="52"/>
+                                <rect key="frame" x="16" y="482" width="361" height="52"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="52" id="ajX-1H-daA"/>
                                 </constraints>
@@ -1077,17 +1077,17 @@
                                 </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="gyN-qx-mZh">
-                                <rect key="frame" x="0.0" y="530" width="393" height="322"/>
+                                <rect key="frame" x="0.0" y="550" width="393" height="302"/>
                                 <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="d6W-AA-vYZ">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="" id="e3k-DF-Csi">
-                                        <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PreviewCell" id="e3k-DF-Csi">
+                                        <rect key="frame" x="16" y="16" width="127.99999999999997" height="128"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="atf-0e-Qgc">
                                             <rect key="frame" x="0.0" y="0.0" width="127.99999999999997" height="128"/>
@@ -1097,7 +1097,7 @@
                                 </cells>
                             </collectionView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="J9I-pU-zIW">
-                                <rect key="frame" x="16" y="370" width="175" height="76"/>
+                                <rect key="frame" x="16" y="390" width="175" height="76"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="APP License" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XES-wo-cfA">
                                         <rect key="frame" x="0.0" y="0.0" width="175" height="32"/>
@@ -1134,11 +1134,8 @@
                                     </label>
                                 </subviews>
                             </stackView>
-                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Vkq-4T-Tdo">
-                                <rect key="frame" x="179" y="227" width="35" height="35"/>
-                            </activityIndicatorView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="HrI-tB-F0d">
-                                <rect key="frame" x="243.33333333333337" y="370" width="133.66666666666663" height="76"/>
+                                <rect key="frame" x="243.33333333333337" y="390" width="133.66666666666663" height="76"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Photo in .JPG format" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5ga-KD-7Bo">
                                         <rect key="frame" x="0.0" y="0.0" width="133.66666666666666" height="32"/>
@@ -1165,6 +1162,9 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" misplaced="YES" hidesWhenStopped="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="Vkq-4T-Tdo">
+                                <rect key="frame" x="179" y="237" width="35" height="35"/>
+                            </activityIndicatorView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ZzD-gm-urR"/>
                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1269,6 +1269,7 @@
                         <outlet property="goHomeButton" destination="wwh-Ms-ILp" id="UZJ-qr-VrY"/>
                         <outlet property="headerView" destination="9tr-cW-Xf1" id="kNn-2r-qLm"/>
                         <outlet property="photoFormatLabel" destination="5ga-KD-7Bo" id="dBr-ef-RFY"/>
+                        <outlet property="previewCollectionView" destination="gyN-qx-mZh" id="9f8-xi-shi"/>
                         <outlet property="searchTF" destination="QYU-dM-Gik" id="gl5-Sm-wB2"/>
                         <outlet property="secondSearchContainerView" destination="DVq-rA-qns" id="7xC-VA-dIk"/>
                         <outlet property="selectedImage" destination="NGY-sa-koG" id="nBy-2h-q0t"/>
@@ -1278,7 +1279,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ni2-dE-PmP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2611" y="-34"/>
+            <point key="canvasLocation" x="2573" y="-34"/>
         </scene>
         <!--Image ZoomVC-->
         <scene sceneID="fHf-0b-gwn">
@@ -1300,7 +1301,7 @@
                                         <buttonConfiguration key="configuration" style="filled" title="Close" imagePadding="10">
                                             <imageReference key="image" image="xmark" catalog="system" symbolScale="small"/>
                                             <color key="baseForegroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            <color key="baseBackgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="baseBackgroundColor" red="0.26666666666666666" green="0.26666666666666666" blue="0.26666666666666666" alpha="0.5" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                         </buttonConfiguration>
                                         <connections>
                                             <action selector="closeButtonTapped:" destination="WUj-N3-3bx" eventType="touchUpInside" id="Ycz-Zx-74p"/>
@@ -1340,7 +1341,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="S1N-Sb-gw4" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="VSe-2o-aSw" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3420.6106870229005" y="-32.394366197183103"/>
+            <point key="canvasLocation" x="3360" y="-32"/>
         </scene>
     </scenes>
     <resources>

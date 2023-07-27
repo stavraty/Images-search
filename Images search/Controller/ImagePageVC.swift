@@ -11,26 +11,31 @@ import Photos
 class ImagePageVC: BaseVC {
     
     @IBOutlet weak var selectedImage: UIImageView!
-    @IBOutlet weak var searchTF: UITextField!
+    //@IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var zoomButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var photoFormatLabel: UILabel!
+    @IBOutlet weak var previewCollectionView: UICollectionView!
     
     var largeImageURL: URL?
     private let imageCacheService = ImageCacheService.shared
+    private var previews: [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupActivityIndicator()
         setupButtons()
         updatePhotoFormatLabel()
+        registerCells()
+        setupPreviewCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
         loadLargeImage()
+        // loadPreviews()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -134,6 +139,21 @@ class ImagePageVC: BaseVC {
         present(alertController, animated: true, completion: nil)
     }
     
+    func registerCells() {
+        previewCollectionView.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
+    }
+    
+    private func setupPreviewCollectionView() {
+        previewCollectionView.dataSource = self
+        previewCollectionView.delegate = self
+        previewCollectionView.register(UINib(nibName: "PreviewCell", bundle: nil), forCellWithReuseIdentifier: "PreviewCell")
+    }
+    
+//    private func loadPreviews() {
+//        // Завантаження попередніх зображень з відповідних URL
+//        previews = [...] // Ваші URL попередніх зображень
+//        previewCollectionView.reloadData()
+//    }
 
     @IBAction func zoomButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "showImageZoomViewSegue", sender: nil)
@@ -154,7 +174,27 @@ class ImagePageVC: BaseVC {
         guard let imageURL = largeImageURL else {
             return
         }
-
         downloadAndSaveImage(from: imageURL)
+    }
+}
+
+extension ImagePageVC: UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return previews.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreviewCell", for: indexPath) as? PreviewCell
+        let previewURL = previews[indexPath.item]
+        cell?.setImage(with: previewURL)
+        return cell ?? UICollectionViewCell()
+    }
+}
+
+extension ImagePageVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        // Виконайте код, що пов'язаний з обробкою натискання на комірку
+        let selectedPreviewURL = previews[indexPath.item]
+        // Додайте вашу логіку для обробки натискання на попереднє зображення
     }
 }

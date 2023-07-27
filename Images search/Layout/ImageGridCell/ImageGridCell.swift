@@ -12,6 +12,7 @@ class ImageGridCell: UICollectionViewCell {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var shareButton: UIButton!
+    
     private var pageURL: String?
     private var largeImageURL: String?
     

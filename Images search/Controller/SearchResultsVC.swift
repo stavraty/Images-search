@@ -7,44 +7,18 @@
 
 import UIKit
 
-class SearchResultsVC: UIViewController {
+class SearchResultsVC: BaseVC {
     
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var goHomeButton: UIButton!
-    @IBOutlet weak var filterCollectionView: UICollectionView!
-    @IBOutlet weak var secondSearchContainerView: UIView!
-    @IBOutlet weak var searchTF: UITextField!
-    @IBOutlet weak var filterButton: UIButton!
-    @IBOutlet weak var totalImagesCountLabel: UILabel!
-    @IBOutlet weak var headerView: UIView!
-    
-    private let api = APIService()
-    private var images: [PixabayResponse.Image] = []
-    private var currentPage = 1
-    private var query: String?
     private var estimateWidth = 160.0
     private var cellMarginSize = 16.0
-    private var chosenImageType: String?
-    private var selectedFilterIndex: Int = 0
-    private var selectedFilter: String = "Related"
-    private var selectedTag: String?
-    var filters: [String] = []
-    var searchManager: SearchManager!
-    var searchText: String?
-    var searchQuery: String?
-    var imageType: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        setupView()
+    
         setupDelegates()
         registerCells()
         setupGridView()
-        setupTapGesture()
         fetchImages()
-        setupButtons()
-        setupSearchView()
     }
     
     override func viewDidLayoutSubviews() {
@@ -53,16 +27,6 @@ class SearchResultsVC: UIViewController {
         DispatchQueue.main.async {
             self.collectionView.reloadData()
         }
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        self.navigationController?.setNavigationBarHidden(true, animated: animated)
-    }
-    
-    private func setupView() {
-        searchTF.returnKeyType = .search
-        searchTF.text = searchText
     }
 
     private func setupDelegates() {
@@ -73,38 +37,12 @@ class SearchResultsVC: UIViewController {
         searchTF.delegate = self
     }
     
-    private func setupButtons() {
-        setupGoHomeButton()
-        setupFilterButton()
-    }
-
-    private func setupGoHomeButton() {
-        goHomeButton.setTitle("", for: .normal)
-        goHomeButton.layer.cornerRadius = 5
-        goHomeButton.clipsToBounds = true
-    }
-
-    private func setupFilterButton() {
-        filterButton.setTitle("", for: .normal)
-        filterButton.layer.cornerRadius = 5
-        filterButton.clipsToBounds = true
-        filterButton.layer.borderWidth = 1.0
-        filterButton.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
-    }
-    
-    private func setupSearchView() {
-        secondSearchContainerView.layer.cornerRadius = 5
-        secondSearchContainerView.clipsToBounds = true
-        secondSearchContainerView.layer.borderWidth = 1.0
-        secondSearchContainerView.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
-    }
-    
     func registerCells() {
         collectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
         filterCollectionView.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
     }
     
-    func setupGridView() {
+    override func setupGridView() {
         let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
         flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
@@ -112,21 +50,15 @@ class SearchResultsVC: UIViewController {
         flow.estimatedItemSize = CGSize(width: width, height: width)
     }
     
-    func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        tapGesture.cancelsTouchesInView = false
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    func fetchImages() {
+    override func fetchImages() {
         self.query = searchQuery ?? ""
         self.imageType = imageType ?? "all"
         self.filters.removeAll()
         self.filters.append(selectedTag ?? "Related")
         fetchNextPage()
     }
-    
-    func fetchNextPage() {
+
+    override func fetchNextPage() {
         guard let query = query, let imageType = imageType else {
             return
         }
@@ -141,7 +73,7 @@ class SearchResultsVC: UIViewController {
                     let tags = image.tags.split(separator: ",")
                     tempTags.append(contentsOf: tags.map { String($0) })
                 }
-                
+
                 let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
                 self?.filters.append(contentsOf: uniqueTags.filter { $0 != self?.selectedTag })
 
@@ -162,19 +94,6 @@ class SearchResultsVC: UIViewController {
                 print(error.localizedDescription)
             }
         }
-    }
-    
-    @objc private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-
-    @IBAction func goHomeButtonTapped(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true) //popToRootViewController(animated: true)
-    }
-    
-    @IBAction func filterButtonTapped(_ sender: Any) {
-        let popoverPresenter = PopoverPresenter(button: filterButton, delegate: self, storyboard: storyboard!)
-        popoverPresenter.presentPopover()
     }
 }
 
@@ -219,7 +138,7 @@ extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
         let width = self.calculateWith()
         return CGSize(width: width, height: width)
     }
-    
+
     func calculateWith() -> CGFloat {
         let estimateWidth = CGFloat(estimateWidth)
         let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
@@ -260,21 +179,6 @@ extension SearchResultsVC: UICollectionViewDelegate {
     }
 }
 
-extension SearchResultsVC: SelectImageTypeTableVCDelegate {
-    func didChooseImageType(type: String) {
-        self.chosenImageType = type
-        self.images = []
-        self.currentPage = 1
-        self.imageType = self.chosenImageType ?? "all"
-        self.fetchImages()
-    }
-
-    func displayStringForType(type: String) -> String? {
-        let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
-        return imageTypeMap[type]
-    }
-}
-
 extension SearchResultsVC: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
@@ -283,11 +187,5 @@ extension SearchResultsVC: UITextFieldDelegate {
         currentPage = 1
         fetchImages()
         return true
-    }
-}
-
-extension SearchResultsVC: UIPopoverPresentationControllerDelegate {
-    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
-        return .none
     }
 }
