@@ -9,13 +9,12 @@ import UIKit
 
 class SearchResultsVC: BaseVC {
     
-    private var estimateWidth = 160.0
+    private var estimateWidth = 140.0
     private var cellMarginSize = 16.0
-    var previews: [URL] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        
         setupDelegates()
         registerCells()
         setupGridView()
@@ -29,7 +28,7 @@ class SearchResultsVC: BaseVC {
             self.collectionView.reloadData()
         }
     }
-
+    
     private func setupDelegates() {
         self.collectionView.dataSource = self
         self.collectionView.delegate = self
@@ -50,59 +49,7 @@ class SearchResultsVC: BaseVC {
         let width = self.calculateWith()
         flow.estimatedItemSize = CGSize(width: width, height: width)
     }
-    
-    override func fetchImages() {
-        self.query = searchQuery ?? ""
-        self.imageType = imageType ?? "all"
-        self.filters.removeAll()
-        self.filters.append(selectedTag ?? "Related")
-        self.previews.removeAll()
-        fetchNextPage()
-    }
 
-    override func fetchNextPage() {
-        guard let query = query, let imageType = imageType else {
-            return
-        }
-
-        api.fetchImages(query: query, imageType: imageType, page: currentPage) { [weak self] result in
-            switch result {
-            case .success(let pixabayResponse):
-                self?.images.append(contentsOf: pixabayResponse.hits)
-
-                var tempTags = [String]()
-                for image in pixabayResponse.hits {
-                    let tags = image.tags.split(separator: ",")
-                    tempTags.append(contentsOf: tags.map { String($0) })
-                }
-                
-                for image in pixabayResponse.hits {
-                    if let previewURL = URL(string: image.previewURL) {
-                        self?.previews.append(previewURL)
-                    }
-                }
-
-                let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
-                self?.filters.append(contentsOf: uniqueTags.filter { $0 != self?.selectedTag })
-
-                self?.currentPage += 1
-                DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                    self?.filterCollectionView.reloadData()
-                    self?.setupGridView()
-
-                    let numberFormatter = NumberFormatter()
-                    numberFormatter.numberStyle = .decimal
-                    let formattedTotal = numberFormatter.string(from: NSNumber(value: pixabayResponse.total)) ?? "0"
-
-                    self?.totalImagesCountLabel.text = "\(formattedTotal) Free Images"
-                    (self?.collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.invalidateLayout()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-        }
-    }
 }
 
 extension SearchResultsVC: UICollectionViewDataSource {
@@ -161,10 +108,10 @@ extension SearchResultsVC: UICollectionViewDelegate {
         if collectionView == self.filterCollectionView {
             if indexPath.row != 0 {
                 selectedTag = filters[indexPath.row]
-                
+
                 filters = filters.filter { $0 != selectedTag }
                 filters.insert(selectedTag ?? "Related", at: 0)
-                
+
                 collectionView.reloadData()
                 self.images = []
                 self.currentPage = 1
@@ -182,7 +129,7 @@ extension SearchResultsVC: UICollectionViewDelegate {
 
         if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageVC") as? ImagePageVC {
             imagePageVC.largeImageURL = imageURL
-            imagePageVC.previews = previews
+            // imagePageVC.previews = previews
             self.navigationController?.pushViewController(imagePageVC, animated: true)
         }
     }

@@ -17,10 +17,9 @@ class BaseVC: UIViewController {
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var filterCollectionView: UICollectionView!
-
+    
     let api = APIService()
-    var searchManager: SearchManager!
-    // let searchManager = SearchManager()
+    var searchManager: SearchManager?
     var images: [PixabayResponse.Image] = []
     var chosenImageType: String?
     var currentPage = 1
@@ -32,16 +31,18 @@ class BaseVC: UIViewController {
     var selectedFilter: String = "Related"
     var selectedTag: String?
     var filters: [String] = []
-        
+    
+    var previews: [URL] = []
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         setupSearchTFAppearance()
         setupTapGesture()
         setupButtons()
         setupSearchView()
         setupHeaderView()
-        fetchImages()
+        //fetchImages()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -58,13 +59,13 @@ class BaseVC: UIViewController {
         setupGoHomeButton()
         setupFilterButton()
     }
-
+    
     private func setupGoHomeButton() {
         goHomeButton.setTitle("", for: .normal)
         goHomeButton.layer.cornerRadius = 5
         goHomeButton.clipsToBounds = true
     }
-
+    
     private func setupFilterButton() {
         filterButton.setTitle("", for: .normal)
         filterButton.layer.cornerRadius = 5
@@ -92,14 +93,61 @@ class BaseVC: UIViewController {
     }
     
     func setupGridView() {
+        fatalError("setupGridView() method must be overridden in subclasses.")
     }
     
     func fetchImages() {
+        self.query = searchQuery ?? ""
+        self.imageType = imageType ?? "all"
+        self.filters.removeAll()
+        self.filters.append(selectedTag ?? "Related")
+        self.previews.removeAll()
+        fetchNextPage()
     }
     
     func fetchNextPage() {
+        guard let query = query, let imageType = imageType else {
+            return
+        }
+
+        api.fetchImages(query: query, imageType: imageType, page: currentPage) { [weak self] result in
+            switch result {
+            case .success(let pixabayResponse):
+                self?.images.append(contentsOf: pixabayResponse.hits)
+
+                var tempTags = [String]()
+                for image in pixabayResponse.hits {
+                    let tags = image.tags.split(separator: ",")
+                    tempTags.append(contentsOf: tags.map { String($0) })
+                }
+
+                for image in pixabayResponse.hits {
+                    if let previewURL = URL(string: image.previewURL) {
+                        self?.previews.append(previewURL)
+                    }
+                }
+
+                let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
+                self?.filters.append(contentsOf: uniqueTags.filter { $0 != self?.selectedTag })
+
+                self?.currentPage += 1
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
+                    self?.filterCollectionView.reloadData()
+                    self?.setupGridView()
+
+                    let numberFormatter = NumberFormatter()
+                    numberFormatter.numberStyle = .decimal
+                    let formattedTotal = numberFormatter.string(from: NSNumber(value: pixabayResponse.total)) ?? "0"
+
+                    self?.totalImagesCountLabel.text = "\(formattedTotal) Free Images"
+                    (self?.collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.invalidateLayout()
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
+        }
     }
-    
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)

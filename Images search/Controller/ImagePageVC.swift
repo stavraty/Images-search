@@ -19,7 +19,8 @@ class ImagePageVC: BaseVC {
     
     var largeImageURL: URL?
     let imageCacheService = ImageCacheService.shared
-    var previews: [URL] = []
+    // var previews: [URL] = []
+    var largeImageURLs: [URL] = []
     var selectedImageURL: URL?
     private var isImageLoaded = false
     
@@ -54,7 +55,7 @@ class ImagePageVC: BaseVC {
     }
     
     override func setupGridView() {
-        let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        let flow = previewCollectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
         flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
         let width = self.calculateWith()
@@ -209,10 +210,18 @@ extension ImagePageVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "PreviewCell", for: indexPath) as? PreviewCell
+        
+        // Ensure that the index is within bounds for both arrays
+        guard indexPath.item < previews.count, indexPath.item < largeImageURLs.count else {
+            return cell ?? UICollectionViewCell()
+        }
+        
         let previewURL = previews[indexPath.item]
-        cell?.setImage(with: previewURL)
+        let largeImageURL = largeImageURLs[indexPath.item]
+        cell?.setImage(with: previewURL, largeImageURL: largeImageURL)
         return cell ?? UICollectionViewCell()
     }
+
 }
 
 extension ImagePageVC: UICollectionViewDelegate {
@@ -221,3 +230,4 @@ extension ImagePageVC: UICollectionViewDelegate {
         loadLargeImage(withURL: selectedPreviewURL)
     }
 }
+

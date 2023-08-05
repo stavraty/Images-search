@@ -8,13 +8,15 @@
 import UIKit
 
 class SearchVC: UIViewController {
-
+    
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var selectImageTypeButton: UIButton!
     @IBOutlet weak var searchContainerView: UIView!
     
     var chosenImageType: String? = nil
-    private var searchManager = SearchManager()
+    var searchManager = SearchManager()
+    let api = APIService()
+    var currentPage = 1
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,7 +40,7 @@ class SearchVC: UIViewController {
         let borderLayer = CALayer()
         
         borderLayer.backgroundColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
-
+        
         let height: CGFloat = 24
         let verticalInset: CGFloat = (selectImageTypeButton.frame.height - height) / 2
         borderLayer.frame = CGRect(x: 0, y: verticalInset, width: 1, height: height)
@@ -78,7 +80,8 @@ class SearchVC: UIViewController {
     @IBAction func searchButtonTapped(_ sender: Any) {
         let query = searchTF.text ?? ""
         let imageType = chosenImageType ?? "all"
-        searchManager.fetchImages(query: query, imageType: imageType) {
+        // searchManager.fetchImages(query: query, imageType: imageType) {
+        api.fetchImages(query: query, imageType: imageType, page: currentPage) {_ in
             DispatchQueue.main.async { [weak self] in
                 self?.performSegue(withIdentifier: "showSearchResults", sender: self)
             }
