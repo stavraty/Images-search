@@ -200,6 +200,10 @@ extension ImagePageVC: UICollectionViewDataSource {
         }
         
         cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL)
+        
+        if !shouldShowShareButton {
+            cell?.hideShareButton()
+        }
 
         return cell ?? UICollectionViewCell()
     }
