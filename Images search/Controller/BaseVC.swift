@@ -19,7 +19,6 @@ class BaseVC: UIViewController {
     @IBOutlet weak var filterCollectionView: UICollectionView!
     
     let api = APIService()
-    var searchManager: SearchManager?
     var images: [PixabayResponse.Image] = []
     var chosenImageType: String?
     var currentPage = 1
@@ -31,6 +30,7 @@ class BaseVC: UIViewController {
     var selectedFilter: String = "Related"
     var selectedTag: String?
     var filters: [String] = []
+    var receivedImages: [PixabayResponse.Image] = []
     
     var previews: [URL] = []
     
@@ -42,7 +42,6 @@ class BaseVC: UIViewController {
         setupButtons()
         setupSearchView()
         setupHeaderView()
-        //fetchImages()
     }
     
     override func viewWillAppear(_ animated: Bool) {

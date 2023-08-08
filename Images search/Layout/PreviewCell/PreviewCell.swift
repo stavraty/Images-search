@@ -18,8 +18,8 @@ class PreviewCell: UICollectionViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-//        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCellTap))
-//        self.addGestureRecognizer(tapGestureRecognizer)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleCellTap))
+        self.addGestureRecognizer(tapGestureRecognizer)
     }
 
     func setImage(with previewURL: URL, largeImageURL: URL) {
@@ -35,13 +35,9 @@ class PreviewCell: UICollectionViewCell {
         })
     }
     
-//    func cellTapped() {
-//        if let largeImageURL = largeImageURL {
-//            imagePageVC?.handleCellTap(with: largeImageURL)
-//        }
-//    }
-//
-//    @objc func handleCellTap() {
-//        cellTapped()
-//    }
+    @objc func handleCellTap() {
+        if let largeImageURL = largeImageURL {
+            imagePageVC?.loadLargeImage(withURL: largeImageURL)
+        }
+    }
 }

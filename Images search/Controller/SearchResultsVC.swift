@@ -11,6 +11,7 @@ class SearchResultsVC: BaseVC {
     
     private var estimateWidth = 140.0
     private var cellMarginSize = 16.0
+    private var pageURL: URL?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,7 +80,6 @@ extension SearchResultsVC: UICollectionViewDataSource {
         }
         return UICollectionViewCell()
     }
-
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if collectionView == self.collectionView && indexPath.row == images.count - 1 {
@@ -120,6 +120,7 @@ extension SearchResultsVC: UICollectionViewDelegate {
             }
         } else if collectionView == self.collectionView {
             let selectedImageURL = URL(string: images[indexPath.row].largeImageURL)
+            let selectedPageURL = images[indexPath.row].pageURL // Отримати pageURL з даних об'єкта
             openImagePageVC(with: selectedImageURL)
         }
     }
@@ -129,7 +130,10 @@ extension SearchResultsVC: UICollectionViewDelegate {
 
         if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageVC") as? ImagePageVC {
             imagePageVC.largeImageURL = imageURL
-            // imagePageVC.previews = previews
+            imagePageVC.pageURL = pageURL // Додайте передачу pageURL
+            imagePageVC.relatedImagesCollectionView = self.collectionView // Передаємо collectionView
+            imagePageVC.receivedImages = images // Передача масиву images
+            imagePageVC.shouldShowShareButton = false // Приховати кнопку
             self.navigationController?.pushViewController(imagePageVC, animated: true)
         }
     }

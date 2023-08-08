@@ -14,7 +14,6 @@ class SearchVC: UIViewController {
     @IBOutlet weak var searchContainerView: UIView!
     
     var chosenImageType: String? = nil
-    var searchManager = SearchManager()
     let api = APIService()
     var currentPage = 1
     

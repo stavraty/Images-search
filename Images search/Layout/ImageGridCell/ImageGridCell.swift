@@ -27,7 +27,7 @@ class ImageGridCell: UICollectionViewCell {
         self.clipsToBounds = true
     }
 
-    func setImage(with url: URL, pageURL: String, largeImageURL: String){
+    func setImage(with url: URL, pageURL: String, largeImageURL: String?){
         hideShareButton()
         activityIndicator.startAnimating()
         self.pageURL = pageURL

@@ -1250,7 +1250,7 @@
                                             <inset key="sectionInset" minX="16" minY="16" maxX="16" maxY="16"/>
                                         </collectionViewFlowLayout>
                                         <cells>
-                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="PreviewCell" id="e3k-DF-Csi" customClass="PreviewCell" customModule="Images_search" customModuleProvider="target">
+                                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="ImageGridCell" id="e3k-DF-Csi" customClass="PreviewCell" customModule="Images_search" customModuleProvider="target">
                                                 <rect key="frame" x="16" y="16" width="128" height="128"/>
                                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                                 <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="atf-0e-Qgc">
