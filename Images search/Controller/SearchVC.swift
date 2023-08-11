@@ -79,7 +79,6 @@ class SearchVC: UIViewController {
     @IBAction func searchButtonTapped(_ sender: Any) {
         let query = searchTF.text ?? ""
         let imageType = chosenImageType ?? "all"
-        // searchManager.fetchImages(query: query, imageType: imageType) {
         api.fetchImages(query: query, imageType: imageType, page: currentPage) {_ in
             DispatchQueue.main.async { [weak self] in
                 self?.performSegue(withIdentifier: "showSearchResults", sender: self)

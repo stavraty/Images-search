@@ -70,7 +70,8 @@ extension SearchResultsVC: UICollectionViewDataSource {
             guard let imageURL = URL(string: image.webformatURL) else {
                 return UICollectionViewCell()
             }
-            cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL)
+            cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: true)
+            
             return cell ?? UICollectionViewCell()
         } else if collectionView == self.filterCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell
@@ -120,7 +121,7 @@ extension SearchResultsVC: UICollectionViewDelegate {
             }
         } else if collectionView == self.collectionView {
             let selectedImageURL = URL(string: images[indexPath.row].largeImageURL)
-            let selectedPageURL = images[indexPath.row].pageURL // Отримати pageURL з даних об'єкта
+            let selectedPageURL = images[indexPath.row].pageURL
             openImagePageVC(with: selectedImageURL)
         }
     }
@@ -130,10 +131,10 @@ extension SearchResultsVC: UICollectionViewDelegate {
 
         if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageVC") as? ImagePageVC {
             imagePageVC.largeImageURL = imageURL
-            imagePageVC.pageURL = pageURL // Додайте передачу pageURL
-            imagePageVC.relatedImagesCollectionView = self.collectionView // Передаємо collectionView
-            imagePageVC.receivedImages = images // Передача масиву images
-            imagePageVC.shouldShowShareButton = false // Приховати кнопку
+            imagePageVC.pageURL = pageURL
+            imagePageVC.relatedImagesCollectionView = self.collectionView
+            imagePageVC.receivedImages = images
+            imagePageVC.searchText = searchTF.text
             self.navigationController?.pushViewController(imagePageVC, animated: true)
         }
     }

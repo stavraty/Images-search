@@ -13,6 +13,7 @@ class ImageZoomVC: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     var largeImageURL: URL?
+    var selectedImageURL: URL?
     private let imageCacheService = ImageCacheService.shared
     
     override func viewDidLoad() {

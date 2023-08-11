@@ -26,15 +26,17 @@ class ImageGridCell: UICollectionViewCell {
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
     }
-
-    func setImage(with url: URL, pageURL: String, largeImageURL: String?){
+    
+    func setImage(with url: URL, pageURL: String, largeImageURL: String?, showShareButton: Bool) {
         hideShareButton()
         activityIndicator.startAnimating()
         self.pageURL = pageURL
         self.largeImageURL = largeImageURL
         imageView.sd_setImage(with: url) { [weak self] (_, _, _, _) in
             self?.activityIndicator.stopAnimating()
-            self?.showShareButton()
+            if showShareButton {
+                self?.showShareButton()
+            }
         }
     }
     

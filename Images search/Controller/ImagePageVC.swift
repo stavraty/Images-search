@@ -16,6 +16,7 @@ class ImagePageVC: BaseVC {
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var photoFormatLabel: UILabel!
     @IBOutlet weak var previewCollectionView: UICollectionView!
+    @IBOutlet weak var downloadButton: UIButton!
     
     var largeImageURL: URL?
     var pageURL: URL?
@@ -25,7 +26,6 @@ class ImagePageVC: BaseVC {
     var selectedImageURL: URL?
     var isImageLoaded = false
     var relatedImagesCollectionView: UICollectionView?
-    var shouldShowShareButton = true
     
     private var estimateWidth = 95.0
     private var cellMarginSize = 16.0
@@ -37,6 +37,9 @@ class ImagePageVC: BaseVC {
         setupButtons()
         updatePhotoFormatLabel()
         setupPreviewCollectionView()
+        setupGridView()
+        
+        searchTF.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,14 +49,6 @@ class ImagePageVC: BaseVC {
             selectedImageIndex = largeImageURLs.firstIndex(of: url) ?? 0
             loadLargeImage(withURL: url)
         }
-    }
-    
-    override func setupGridView() {
-        let flow = previewCollectionView?.collectionViewLayout as! UICollectionViewFlowLayout
-        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
-        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
-        let width = self.calculateWith()
-        flow.estimatedItemSize = CGSize(width: width, height: width)
     }
     
     private func setupActivityIndicator() {
@@ -68,6 +63,39 @@ class ImagePageVC: BaseVC {
         shareButton.layer.borderWidth = 1.0
         shareButton.layer.borderColor = UIColor(red: 0.26, green: 0.04, blue: 0.88, alpha: 1.00).cgColor
     }
+    
+    private func updatePhotoFormatLabel() {
+        guard let imageURL = largeImageURL, let format = getImageFormat(from: imageURL) else {
+            return
+        }
+        
+        let labelText = "Photo in .\(format) format"
+        photoFormatLabel.text = labelText
+    }
+    
+    
+    private func setupPreviewCollectionView() {
+        previewCollectionView.dataSource = self
+        previewCollectionView.delegate = self
+        previewCollectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
+    }
+    
+    override func setupGridView() {
+        let flow = previewCollectionView?.collectionViewLayout as! UICollectionViewFlowLayout
+        flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
+        flow.minimumLineSpacing = CGFloat(self.cellMarginSize)
+        let width = self.calculateWith()
+        flow.estimatedItemSize = CGSize(width: width, height: width)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showImageZoomViewSegue" {
+            if let destinationVC = segue.destination as? ImageZoomVC, let imageURL = sender as? URL {
+                destinationVC.largeImageURL = imageURL
+                destinationVC.selectedImageURL = selectedImageURL
+            }
+        }
+    }
 
     private func getImageFormat(from url: URL) -> String? {
         let pathExtension = url.pathExtension.lowercased()
@@ -81,22 +109,8 @@ class ImagePageVC: BaseVC {
         }
     }
     
-    private func updatePhotoFormatLabel() {
-        guard let imageURL = largeImageURL, let format = getImageFormat(from: imageURL) else {
-            return
-        }
-        
-        let labelText = "Photo in .\(format) format"
-        photoFormatLabel.text = labelText
-    }
-    
-    private func setupPreviewCollectionView() {
-        previewCollectionView.dataSource = self
-        previewCollectionView.delegate = self
-        previewCollectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
-    }
-    
     func loadLargeImage(withURL url: URL) {
+        selectedImageURL = url
         activityIndicator.startAnimating()
         activityIndicator.isHidden = false
         
@@ -106,12 +120,13 @@ class ImagePageVC: BaseVC {
                     self?.selectedImage.image = image
                     self?.activityIndicator.stopAnimating()
                     self?.activityIndicator.isHidden = true
-                    self?.selectedImageURL = url
+                    self?.isImageLoaded = true
                 }
             } else {
                 print("Failed to load image from URL: \(url)")
                 self?.activityIndicator.stopAnimating()
                 self?.activityIndicator.isHidden = true
+                self?.isImageLoaded = false
             }
         }
     }
@@ -153,22 +168,14 @@ class ImagePageVC: BaseVC {
     }
 
     @IBAction func zoomButtonTapped(_ sender: Any) {
-        guard isImageLoaded, let imageURL = largeImageURL else {
+        guard isImageLoaded, let imageURL = selectedImageURL else {
             return
         }
-        performSegue(withIdentifier: "showImageZoomViewSegue", sender: nil)
+        performSegue(withIdentifier: "showImageZoomViewSegue", sender: imageURL)
     }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showImageZoomViewSegue" {
-            if let destinationVC = segue.destination as? ImageZoomVC, let imageURL = largeImageURL?.absoluteString {
-                destinationVC.largeImageURL = URL(string: imageURL)
-            }
-        }
-    }
-    
+        
     @IBAction func shareButtonTapped(_ sender: Any) {
-        guard let imageURL = largeImageURL else {
+        guard let imageURL = selectedImageURL else {
             return
         }
         
@@ -179,10 +186,38 @@ class ImagePageVC: BaseVC {
     }
     
     @IBAction func downloadButtonTapped(_ sender: Any) {
-        guard let imageURL = largeImageURL else {
+        guard let imageURL = selectedImageURL else {
             return
         }
         downloadAndSaveImage(from: imageURL)
+    }
+    
+    @IBAction override func filterButtonTapped(_ sender: Any) {
+        
+        print("Filter button tapped in ImagePageVC")
+        let popoverPresenter = PopoverPresenter(button: filterButton, delegate: self, storyboard: storyboard!)
+        popoverPresenter.presentPopover()
+        
+        if let chosenImageType = chosenImageType {
+            print("Chosen image type: \(chosenImageType)")
+            didChooseImageType(type: chosenImageType)
+            
+            if let searchText = searchTF.text {
+                print("Search text: \(searchText)")
+                navigateToSearchResultsVC(with: searchText, imageType: chosenImageType)
+            }
+        }
+    }
+    
+    func navigateToSearchResultsVC(with searchText: String, imageType: String?) {
+        print("Navigating to SearchResultsVC with search text: \(searchText), image type: \(imageType ?? "all")")
+        
+        if let searchResultsVC = storyboard?.instantiateViewController(withIdentifier: "SearchResultsVC") as? SearchResultsVC {
+            searchResultsVC.searchQuery = searchText
+            searchResultsVC.imageType = imageType
+            searchResultsVC.searchText = searchText
+            navigationController?.pushViewController(searchResultsVC, animated: true)
+        }
     }
 }
 
@@ -198,12 +233,7 @@ extension ImagePageVC: UICollectionViewDataSource {
         guard let imageURL = URL(string: image.largeImageURL) else {
             return cell ?? UICollectionViewCell()
         }
-        
-        cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL)
-        
-        if !shouldShowShareButton {
-            cell?.hideShareButton()
-        }
+        cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: false)
 
         return cell ?? UICollectionViewCell()
     }
@@ -224,3 +254,50 @@ extension ImagePageVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
+extension ImagePageVC: UICollectionViewDelegate {
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard indexPath.row < receivedImages.count else {
+            return
+        }
+        
+        let selectedImage = receivedImages[indexPath.row]
+        if let imageURL = URL(string: selectedImage.largeImageURL) {
+            loadLargeImage(withURL: imageURL)
+            updatePhotoFormatLabel(imageURL: imageURL)
+            selectedImageURL = imageURL
+            shareButton.setImageURL(imageURL)
+            downloadButton.setImageURL(imageURL)
+            zoomToSelectedImage(imageURL: imageURL)
+        }
+    }
+    
+    private func updatePhotoFormatLabel(imageURL: URL) {
+        if let format = getImageFormat(from: imageURL) {
+            let labelText = "Photo in .\(format) format"
+            photoFormatLabel.text = labelText
+        }
+    }
+    
+    private func zoomToSelectedImage(imageURL: URL) {
+        guard let currentSelectedImageURL = selectedImageURL, currentSelectedImageURL != imageURL else {
+            return
+        }
+        selectedImageURL = imageURL
+        zoomButtonTapped(self)
+    }
+}
+
+extension UIButton {
+    func setImageURL(_ imageURL: URL) {
+    }
+}
+
+extension ImagePageVC: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        if let searchText = textField.text {
+            navigateToSearchResultsVC(with: searchText, imageType: chosenImageType)
+        }
+        return true
+    }
+}
