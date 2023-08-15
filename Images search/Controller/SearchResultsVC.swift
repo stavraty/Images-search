@@ -26,21 +26,21 @@ class SearchResultsVC: BaseVC {
         super.viewDidLayoutSubviews()
         self.setupGridView()
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
+            self.collectionView?.reloadData()
         }
     }
     
     private func setupDelegates() {
-        self.collectionView.dataSource = self
-        self.collectionView.delegate = self
-        self.filterCollectionView.dataSource = self
-        self.filterCollectionView.delegate = self
+        self.collectionView?.dataSource = self
+        self.collectionView?.delegate = self
+        self.filterCollectionView?.dataSource = self
+        self.filterCollectionView?.delegate = self
         searchTF.delegate = self
     }
     
     func registerCells() {
-        collectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
-        filterCollectionView.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
+        collectionView?.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
+        filterCollectionView?.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
     }
     
     override func setupGridView() {

@@ -193,13 +193,11 @@ class ImagePageVC: BaseVC {
     }
     
     @IBAction override func filterButtonTapped(_ sender: Any) {
-
         print("Filter button tapped in ImagePageVC")
         super.filterButtonTapped(sender)
-        
-        //navigateToSearchResultsVC(with: searchText!, imageType: chosenImageType)
+
         if let chosenImageType = chosenImageType {
-            if let searchText = searchTF.text {
+            if let searchText = searchText {
                 navigateToSearchResultsVC(with: searchText, imageType: chosenImageType)
             }
         }
@@ -212,7 +210,6 @@ class ImagePageVC: BaseVC {
             searchResultsVC.searchQuery = searchText
             searchResultsVC.imageType = imageType
             searchResultsVC.searchText = searchText
-            // searchResultsVC.collectionView = self.relatedImagesCollectionView
             navigationController?.pushViewController(searchResultsVC, animated: true)
         }
     }

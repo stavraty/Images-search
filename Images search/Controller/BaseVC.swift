@@ -13,10 +13,10 @@ class BaseVC: UIViewController {
     @IBOutlet weak var filterButton: UIButton!
     @IBOutlet weak var secondSearchContainerView: UIView!
     @IBOutlet weak var headerView: UIView!
-    @IBOutlet weak var totalImagesCountLabel: UILabel!
+    @IBOutlet weak var totalImagesCountLabel: UILabel?
     @IBOutlet weak var searchTF: UITextField!
-    @IBOutlet weak var collectionView: UICollectionView!
-    @IBOutlet weak var filterCollectionView: UICollectionView!
+    @IBOutlet weak var collectionView: CustomCollectionView?
+    @IBOutlet weak var filterCollectionView: UICollectionView?
     
     let api = APIService()
     var images: [PixabayResponse.Image] = []
@@ -110,9 +110,10 @@ class BaseVC: UIViewController {
         }
 
         api.fetchImages(query: query, imageType: imageType, page: currentPage) { [weak self] result in
+            guard let self = self else { return }
             switch result {
             case .success(let pixabayResponse):
-                self?.images.append(contentsOf: pixabayResponse.hits)
+                self.images.append(contentsOf: pixabayResponse.hits)
 
                 var tempTags = [String]()
                 for image in pixabayResponse.hits {
@@ -122,25 +123,25 @@ class BaseVC: UIViewController {
 
                 for image in pixabayResponse.hits {
                     if let previewURL = URL(string: image.previewURL) {
-                        self?.previews.append(previewURL)
+                        self.previews.append(previewURL)
                     }
                 }
 
                 let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
-                self?.filters.append(contentsOf: uniqueTags.filter { $0 != self?.selectedTag })
+                self.filters.append(contentsOf: uniqueTags.filter { $0 != self.selectedTag })
 
-                self?.currentPage += 1
+                self.currentPage += 1
                 DispatchQueue.main.async {
-                    self?.collectionView.reloadData()
-                    self?.filterCollectionView.reloadData()
-                    self?.setupGridView()
+                    self.collectionView?.reloadData()
+                    self.filterCollectionView?.reloadData()
+                    self.setupGridView()
 
                     let numberFormatter = NumberFormatter()
                     numberFormatter.numberStyle = .decimal
                     let formattedTotal = numberFormatter.string(from: NSNumber(value: pixabayResponse.total)) ?? "0"
 
-                    self?.totalImagesCountLabel.text = "\(formattedTotal) Free Images"
-                    (self?.collectionView.collectionViewLayout as? UICollectionViewFlowLayout)?.invalidateLayout()
+                    self.totalImagesCountLabel?.text = "\(formattedTotal) Free Images"
+                    (self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout)?.invalidateLayout()
                 }
             case .failure(let error):
                 print(error.localizedDescription)
