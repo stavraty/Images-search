@@ -7,15 +7,18 @@
 
 import UIKit
 
-class SearchVC: UIViewController {
+class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchTF: UITextField!
     @IBOutlet weak var selectImageTypeButton: UIButton!
     @IBOutlet weak var searchContainerView: UIView!
     
-    var chosenImageType: String? = nil
-    let api = APIService()
-    var currentPage = 1
+    private var chosenImageType: String? = nil
+    private let api = APIService()
+    private var currentPage = 1
+    private var query: String = ""
+    private var imageType: String = "all"
+    private let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,14 +28,20 @@ class SearchVC: UIViewController {
         setupTapGesture()
         setupSearchTextField()
         setupSearchView()
+        initializeConstants()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showSearchResults", let destinationVC = segue.destination as? SearchResultsVC {
+        if segue.identifier == "showSearchResults", let destinationVC = segue.destination as? SearchResultsViewController {
             destinationVC.searchQuery = searchTF.text
             destinationVC.imageType = chosenImageType
             destinationVC.searchText = searchTF.text
         }
+    }
+    
+    func initializeConstants() {
+        query = searchTF.text ?? ""
+        imageType = chosenImageType ?? "all"
     }
     
     func setupButtonBorder() {
@@ -61,12 +70,6 @@ class SearchVC: UIViewController {
         searchContainerView.clipsToBounds = true
     }
     
-    private func setupGestures() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        tapGesture.numberOfTapsRequired = 1
-        selectImageTypeButton.addGestureRecognizer(tapGesture)
-    }
-    
     @objc private func tapped() {
         let popoverPresenter = PopoverPresenter(button: selectImageTypeButton, delegate: self, storyboard: storyboard!)
         popoverPresenter.presentPopover()
@@ -76,9 +79,13 @@ class SearchVC: UIViewController {
         view.endEditing(true)
     }
     
+    private func setupGestures() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        tapGesture.numberOfTapsRequired = 1
+        selectImageTypeButton.addGestureRecognizer(tapGesture)
+    }
+    
     @IBAction func searchButtonTapped(_ sender: Any) {
-        let query = searchTF.text ?? ""
-        let imageType = chosenImageType ?? "all"
         api.fetchImages(query: query, imageType: imageType, page: currentPage) {_ in
             DispatchQueue.main.async { [weak self] in
                 self?.performSegue(withIdentifier: "showSearchResults", sender: self)
@@ -87,26 +94,25 @@ class SearchVC: UIViewController {
     }
 }
 
-extension SearchVC: UIPopoverPresentationControllerDelegate {
+extension SearchViewController: UIPopoverPresentationControllerDelegate {
     func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
         return .none
     }
 }
 
-extension SearchVC: SelectImageTypeTableVCDelegate {
+extension SearchViewController: SelectImageTypeTableVCDelegate {
     func didChooseImageType(type: String) {
         
         chosenImageType = type
         selectImageTypeButton.setTitle(displayStringForType(type: type), for: .normal)
     }
-
+    
     func displayStringForType(type: String) -> String? {
-        let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
         return imageTypeMap[type]
     }
 }
 
-extension SearchVC: UITextFieldDelegate {
+extension SearchViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         searchButtonTapped(textField)

@@ -12,17 +12,16 @@ protocol SelectImageTypeTableVCDelegate: AnyObject {
     func displayStringForType(type: String) -> String?
 }
 
-class SelectImageTypeTableVC: UITableViewController {
+class SelectImageTypeTableViewController: UITableViewController {
     
     weak var delegate: SelectImageTypeTableVCDelegate?
     
-    let imageTypesAPI = ["all", "photo", "illustration", "vector"]
-    let imageTypesDisplay = ["Images", "Photo", "Illustration", "Vector"]
-    let imageTypeMap: [String: String] = ["Images": "all", "Photo": "photo", "Illustration": "illustration", "Vector": "vector"]
+    private let imageTypesAPI = ["all", "photo", "illustration", "vector"]
+    private let imageTypesDisplay = ["Images", "Photo", "Illustration", "Vector"]
+    private let imageTypeMap: [String: String] = ["Images": "all", "Photo": "photo", "Illustration": "illustration", "Vector": "vector"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         tableView.isScrollEnabled = false
     }
     

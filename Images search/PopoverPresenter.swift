@@ -20,7 +20,7 @@ class PopoverPresenter {
     }
     
     func presentPopover() {
-        guard let popVC = storyboard.instantiateViewController(withIdentifier: "popVC") as? SelectImageTypeTableVC else { return }
+        guard let popVC = storyboard.instantiateViewController(withIdentifier: "popVC") as? SelectImageTypeTableViewController else { return }
         
         popVC.modalPresentationStyle = .popover
         popVC.delegate = delegate

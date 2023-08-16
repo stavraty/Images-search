@@ -7,10 +7,10 @@
 
 import UIKit
 
-class ImageZoomVC: UIViewController {
+class ImageZoomViewController: UIViewController {
     
-    @IBOutlet weak var scrollView: UIScrollView!
-    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet private weak var scrollView: UIScrollView!
+    @IBOutlet private weak var imageView: UIImageView!
     
     var largeImageURL: URL?
     var selectedImageURL: URL?
@@ -53,13 +53,13 @@ class ImageZoomVC: UIViewController {
     }
     
     @IBAction func closeButtonTapped(_ sender: Any) {
-        if let imagePageVC = navigationController?.viewControllers.first(where: { $0 is ImagePageVC }) {
+        if let imagePageVC = navigationController?.viewControllers.first(where: { $0 is ImagePageViewController }) {
             navigationController?.popToViewController(imagePageVC, animated: true)
         }
     }
 }
 
-extension ImageZoomVC: UIScrollViewDelegate {
+extension ImageZoomViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }

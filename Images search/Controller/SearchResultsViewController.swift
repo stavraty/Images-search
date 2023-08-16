@@ -7,7 +7,7 @@
 
 import UIKit
 
-class SearchResultsVC: BaseVC {
+class SearchResultsViewController: BaseViewController {
     
     private var estimateWidth = 140.0
     private var cellMarginSize = 16.0
@@ -30,19 +30,6 @@ class SearchResultsVC: BaseVC {
         }
     }
     
-    private func setupDelegates() {
-        self.collectionView?.dataSource = self
-        self.collectionView?.delegate = self
-        self.filterCollectionView?.dataSource = self
-        self.filterCollectionView?.delegate = self
-        searchTF.delegate = self
-    }
-    
-    func registerCells() {
-        collectionView?.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: "ImageGridCell")
-        filterCollectionView?.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
-    }
-    
     override func setupGridView() {
         let flow = collectionView?.collectionViewLayout as! UICollectionViewFlowLayout
         flow.minimumInteritemSpacing = CGFloat(self.cellMarginSize)
@@ -50,10 +37,22 @@ class SearchResultsVC: BaseVC {
         let width = self.calculateWith()
         flow.estimatedItemSize = CGSize(width: width, height: width)
     }
-
+    
+    func registerCells() {
+        collectionView?.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: ImageGridCell.identifier)
+        filterCollectionView?.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
+    }
+    
+    private func setupDelegates() {
+        self.collectionView?.dataSource = self
+        self.collectionView?.delegate = self
+        self.filterCollectionView?.dataSource = self
+        self.filterCollectionView?.delegate = self
+        searchTF.delegate = self
+    }
 }
 
-extension SearchResultsVC: UICollectionViewDataSource {
+extension SearchResultsViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == self.collectionView {
             return images.count
@@ -65,7 +64,7 @@ extension SearchResultsVC: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "ImageGridCell", for: indexPath) as? ImageGridCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageGridCell.identifier, for: indexPath) as? ImageGridCell
             let image = images[indexPath.row]
             guard let imageURL = URL(string: image.webformatURL) else {
                 return UICollectionViewCell()
@@ -76,7 +75,7 @@ extension SearchResultsVC: UICollectionViewDataSource {
         } else if collectionView == self.filterCollectionView {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell
             let filter = filters[indexPath.row]
-            cell?.configure(with: filter, isSelected: indexPath.row == selectedFilterIndex)
+            cell?.setUp(with: filter, isSelected: indexPath.row == selectedFilterIndex)
             return cell ?? UICollectionViewCell()
         }
         return UICollectionViewCell()
@@ -89,12 +88,12 @@ extension SearchResultsVC: UICollectionViewDataSource {
     }
 }
 
-extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
+extension SearchResultsViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.calculateWith()
         return CGSize(width: width, height: width)
     }
-
+    
     func calculateWith() -> CGFloat {
         let estimateWidth = CGFloat(estimateWidth)
         let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
@@ -104,15 +103,15 @@ extension SearchResultsVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension SearchResultsVC: UICollectionViewDelegate {
+extension SearchResultsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if collectionView == self.filterCollectionView {
             if indexPath.row != 0 {
                 selectedTag = filters[indexPath.row]
-
+                
                 filters = filters.filter { $0 != selectedTag }
                 filters.insert(selectedTag ?? "Related", at: 0)
-
+                
                 collectionView.reloadData()
                 self.images = []
                 self.currentPage = 1
@@ -128,8 +127,8 @@ extension SearchResultsVC: UICollectionViewDelegate {
     
     func openImagePageVC(with imageURL: URL?) {
         guard let imageURL = imageURL else { return }
-
-        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageVC") as? ImagePageVC {
+        
+        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageViewController") as? ImagePageViewController {
             imagePageVC.largeImageURL = imageURL
             imagePageVC.pageURL = pageURL
             imagePageVC.relatedImagesCollectionView = self.collectionView
@@ -140,7 +139,7 @@ extension SearchResultsVC: UICollectionViewDelegate {
     }
 }
 
-extension SearchResultsVC: UITextFieldDelegate {
+extension SearchResultsViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         searchQuery = textField.text
