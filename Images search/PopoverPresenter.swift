@@ -12,6 +12,7 @@ class PopoverPresenter {
     let button: UIButton
     let delegate: SelectImageTypeTableVCDelegate
     let storyboard: UIStoryboard
+    static let popoverStoryboardID = "popVC"
     
     init(button: UIButton, delegate: SelectImageTypeTableVCDelegate, storyboard: UIStoryboard) {
         self.button = button
@@ -20,7 +21,7 @@ class PopoverPresenter {
     }
     
     func presentPopover() {
-        guard let popVC = storyboard.instantiateViewController(withIdentifier: "popVC") as? SelectImageTypeTableViewController else { return }
+        guard let popVC = storyboard.instantiateViewController(withIdentifier: PopoverPresenter.popoverStoryboardID) as? SelectImageTypeTableViewController else { return }
         
         popVC.modalPresentationStyle = .popover
         popVC.delegate = delegate

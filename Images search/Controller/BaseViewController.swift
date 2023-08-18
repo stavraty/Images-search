@@ -23,6 +23,14 @@ class BaseViewController: UIViewController {
     private var query: String?
     private var selectedFilter: String = "Related"
     private var previews: [URL] = []
+    private let defaultCornerRadius: CGFloat = 5
+    private let defaultBorderWidth: CGFloat = 1.0
+    private let defaultBorderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
+    private let defaultBorderColorGray = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
+    private let defaultImageType = "all"
+    let defaultSelectedFilter = "Related"
+    private let maxTagsToShow = 50
+    
     var images: [PixabayResponse.Image] = []
     var chosenImageType: String?
     var currentPage = 1
@@ -51,9 +59,9 @@ class BaseViewController: UIViewController {
     
     func fetchImages() {
         self.query = searchQuery ?? ""
-        self.imageType = imageType ?? "all"
+        self.imageType = imageType ?? defaultImageType
         self.filters.removeAll()
-        self.filters.append(selectedTag ?? "Related")
+        self.filters.append(selectedTag ?? defaultSelectedFilter)
         self.previews.removeAll()
         fetchNextPage()
     }
@@ -81,7 +89,7 @@ class BaseViewController: UIViewController {
                     }
                 }
                 
-                let uniqueTags = Array(Set(tempTags)).prefix(50).sorted()
+                let uniqueTags = Array(Set(tempTags)).prefix(self.maxTagsToShow).sorted()
                 self.filters.append(contentsOf: uniqueTags.filter { $0 != self.selectedTag })
                 
                 self.currentPage += 1
@@ -97,8 +105,7 @@ class BaseViewController: UIViewController {
                     self.totalImagesCountLabel?.text = "\(formattedTotal) Free Images"
                     (self.collectionView?.collectionViewLayout as? UICollectionViewFlowLayout)?.invalidateLayout()
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
+            case .failure(let error): break
             }
         }
     }
@@ -123,28 +130,28 @@ class BaseViewController: UIViewController {
     
     private func setupGoHomeButton() {
         homeButton.setTitle("", for: .normal)
-        homeButton.layer.cornerRadius = 5
+        homeButton.layer.cornerRadius = defaultCornerRadius
         homeButton.clipsToBounds = true
     }
     
     private func setupFilterButton() {
         filterButton.setTitle("", for: .normal)
-        filterButton.layer.cornerRadius = 5
+        filterButton.layer.cornerRadius = defaultCornerRadius
         filterButton.clipsToBounds = true
-        filterButton.layer.borderWidth = 1.0
-        filterButton.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
+        filterButton.layer.borderWidth = defaultBorderWidth
+        filterButton.layer.borderColor = defaultBorderColor
     }
     
     private func setupSearchView() {
-        secondSearchContainerView.layer.cornerRadius = 5
+        secondSearchContainerView.layer.cornerRadius = defaultCornerRadius
         secondSearchContainerView.clipsToBounds = true
-        secondSearchContainerView.layer.borderWidth = 1.0
-        secondSearchContainerView.layer.borderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
+        secondSearchContainerView.layer.borderWidth = defaultBorderWidth
+        secondSearchContainerView.layer.borderColor = defaultBorderColor
     }
     
     private func setupHeaderView() {
-        headerView.layer.borderWidth = 1
-        headerView.layer.borderColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
+        headerView.layer.borderWidth = defaultBorderWidth
+        headerView.layer.borderColor = defaultBorderColor
     }
     
     private func setupTapGesture() {
@@ -168,7 +175,7 @@ extension BaseViewController: SelectImageTypeTableVCDelegate {
         self.chosenImageType = type
         self.images = []
         self.currentPage = 1
-        self.imageType = self.chosenImageType ?? "all"
+        self.imageType = self.chosenImageType ?? defaultImageType //"all"
         self.fetchImages()
     }
     

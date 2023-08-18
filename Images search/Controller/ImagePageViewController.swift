@@ -24,8 +24,12 @@ class ImagePageViewController: BaseViewController {
     private var selectedImageURL: URL?
     private var isImageLoaded = false
     private let imageZoomSegueIdentifier = "showImageZoomViewSegue"
+    private let searchResultsViewControllerIdentifier = "SearchResultsViewController"
     private var estimateWidth = 95.0
     private var cellMarginSize = 16.0
+    private let defaultCornerRadius = 5
+    private let defaultBorderWidth = 1.0
+    private let defaultBorderColor = UIColor(red: 0.26, green: 0.04, blue: 0.88, alpha: 1.00).cgColor
     
     var relatedImagesCollectionView: UICollectionView?
     var largeImageURL: URL?
@@ -71,31 +75,36 @@ class ImagePageViewController: BaseViewController {
     
     func loadLargeImage(withURL url: URL) {
         selectedImageURL = url
-        activityIndicator.startAnimating()
-        activityIndicator.isHidden = false
+        isActivityIndicatorActive(true)
         
         imageCacheService.loadImage(url: url) { [weak self] image in
-            if let image = image {
-                DispatchQueue.main.async {
+            DispatchQueue.main.async {
+                if let image = image {
                     self?.selectedImage.image = image
-                    self?.activityIndicator.stopAnimating()
-                    self?.activityIndicator.isHidden = true
+                    self?.isActivityIndicatorActive(false)
                     self?.isImageLoaded = true
+                } else {
+                    let errorMessage = "Failed to load image from URL: \(url)"
+                    self?.showAlert(title: "Error", message: errorMessage)
+                    self?.isActivityIndicatorActive(false)
+                    self?.isImageLoaded = false
                 }
-            } else {
-                let errorMessage = "Failed to load image from URL: \(url)"
-                self?.showAlert(title: "Error", message: errorMessage)
-                self?.activityIndicator.stopAnimating()
-                self?.activityIndicator.isHidden = true
-                self?.isImageLoaded = false
             }
         }
     }
     
-    private func navigateToSearchResultsVC(with searchText: String, imageType: String?) {
-        print("Navigating to SearchResultsVC with search text: \(searchText), image type: \(imageType ?? "all")")
+    func isActivityIndicatorActive(_ activate: Bool) {
+        if activate {
+            activityIndicator.startAnimating()
+        } else {
+            activityIndicator.stopAnimating()
+        }
         
-        if let searchResultsVC = storyboard?.instantiateViewController(withIdentifier: "SearchResultsViewController") as? SearchResultsViewController {
+        activityIndicator.isHidden = !activate
+    }
+    
+    private func navigateToSearchResultsVC(with searchText: String, imageType: String?) {
+        if let searchResultsVC = storyboard?.instantiateViewController(withIdentifier: searchResultsViewControllerIdentifier) as? SearchResultsViewController {
             searchResultsVC.searchQuery = searchText
             searchResultsVC.imageType = imageType
             searchResultsVC.searchText = searchText
@@ -107,13 +116,13 @@ class ImagePageViewController: BaseViewController {
         activityIndicator.isHidden = true
         activityIndicator.hidesWhenStopped = true
     }
-    
+        
     private func setupButtons() {
         zoomButton.setTitle("", for: .normal)
-        shareButton.layer.cornerRadius = 5
-        shareButton.clipsToBounds = true
-        shareButton.layer.borderWidth = 1.0
-        shareButton.layer.borderColor = UIColor(red: 0.26, green: 0.04, blue: 0.88, alpha: 1.00).cgColor
+        shareButton.layer.cornerRadius = CGFloat(defaultCornerRadius)
+        shareButton.clipsToBounds = true 
+        shareButton.layer.borderWidth = defaultBorderWidth
+        shareButton.layer.borderColor = defaultBorderColor
     }
     
     private func updatePhotoFormatLabel() {
@@ -129,7 +138,7 @@ class ImagePageViewController: BaseViewController {
     private func setupPreviewCollectionView() {
         previewCollectionView.dataSource = self
         previewCollectionView.delegate = self
-        previewCollectionView.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: ImageGridCell.identifier)
+        previewCollectionView.register(UINib(nibName: ImageGridCell.nibName, bundle: nil), forCellWithReuseIdentifier: ImageGridCell.identifier)
     }
     
     private func getImageFormat(from url: URL) -> String? {
@@ -187,18 +196,17 @@ class ImagePageViewController: BaseViewController {
         guard isImageLoaded, let imageURL = selectedImageURL else {
             return
         }
-        performSegue(withIdentifier: "showImageZoomViewSegue", sender: imageURL)
+        performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
-        guard let imageURL = selectedImageURL else {
+        guard let imageURL = selectedImageURL,
+              let presenter = UIApplication.shared.windows.first?.rootViewController else {
             return
         }
         
         let activityViewController = UIActivityViewController(activityItems: [imageURL], applicationActivities: nil)
-        if let presenter = UIApplication.shared.windows.first?.rootViewController {
-            presenter.present(activityViewController, animated: true, completion: nil)
-        }
+        presenter.present(activityViewController, animated: true, completion: nil)
     }
     
     @IBAction func downloadButtonTapped(_ sender: Any) {
@@ -209,9 +217,7 @@ class ImagePageViewController: BaseViewController {
     }
     
     @IBAction override func filterButtonTapped(_ sender: Any) {
-        print("Filter button tapped in ImagePageVC")
         super.filterButtonTapped(sender)
-        
         if let chosenImageType = chosenImageType {
             if let searchText = searchText {
                 navigateToSearchResultsVC(with: searchText, imageType: chosenImageType)
@@ -228,15 +234,21 @@ extension ImagePageViewController: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageGridCell.identifier, for: indexPath) as? ImageGridCell
         
+        guard let cell = cell else {
+            return UICollectionViewCell()
+        }
+        
         let image = receivedImages[indexPath.row]
         guard let imageURL = URL(string: image.largeImageURL) else {
-            return cell ?? UICollectionViewCell()
+            return UICollectionViewCell()
         }
-        cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: false)
         
-        return cell ?? UICollectionViewCell()
+        cell.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: false)
+        
+        return cell
     }
 }
+
 
 extension ImagePageViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -264,8 +276,6 @@ extension ImagePageViewController: UICollectionViewDelegate {
             loadLargeImage(withURL: imageURL)
             updatePhotoFormatLabel(imageURL: imageURL)
             selectedImageURL = imageURL
-            shareButton.setImageURL(imageURL)
-            downloadButton.setImageURL(imageURL)
             zoomToSelectedImage(imageURL: imageURL)
         }
     }
@@ -283,11 +293,6 @@ extension ImagePageViewController: UICollectionViewDelegate {
         }
         selectedImageURL = imageURL
         zoomButtonTapped(self)
-    }
-}
-
-extension UIButton {
-    func setImageURL(_ imageURL: URL) {
     }
 }
 

@@ -19,6 +19,10 @@ class SearchViewController: UIViewController {
     private var query: String = ""
     private var imageType: String = "all"
     private let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
+    private let popoverSegueIdentifier = "showSearchResults"
+    private let borderHeight: CGFloat = 24
+    private let defaultCornerRadius: CGFloat = 5
+    private let defaultBorderColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +36,7 @@ class SearchViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showSearchResults", let destinationVC = segue.destination as? SearchResultsViewController {
+        if segue.identifier == popoverSegueIdentifier, let destinationVC = segue.destination as? SearchResultsViewController {
             destinationVC.searchQuery = searchTF.text
             destinationVC.imageType = chosenImageType
             destinationVC.searchText = searchTF.text
@@ -46,12 +50,9 @@ class SearchViewController: UIViewController {
     
     func setupButtonBorder() {
         let borderLayer = CALayer()
-        
-        borderLayer.backgroundColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
-        
-        let height: CGFloat = 24
-        let verticalInset: CGFloat = (selectImageTypeButton.frame.height - height) / 2
-        borderLayer.frame = CGRect(x: 0, y: verticalInset, width: 1, height: height)
+        borderLayer.backgroundColor = defaultBorderColor
+        let verticalInset: CGFloat = (selectImageTypeButton.frame.height - borderHeight) / 2
+        borderLayer.frame = CGRect(x: 0, y: verticalInset, width: 1, height: borderHeight)
         selectImageTypeButton.layer.addSublayer(borderLayer)
     }
     
@@ -66,7 +67,7 @@ class SearchViewController: UIViewController {
     }
     
     func setupSearchView() {
-        searchContainerView.layer.cornerRadius = 5
+        searchContainerView.layer.cornerRadius = defaultCornerRadius
         searchContainerView.clipsToBounds = true
     }
     
@@ -88,7 +89,7 @@ class SearchViewController: UIViewController {
     @IBAction func searchButtonTapped(_ sender: Any) {
         api.fetchImages(query: query, imageType: imageType, page: currentPage) {_ in
             DispatchQueue.main.async { [weak self] in
-                self?.performSegue(withIdentifier: "showSearchResults", sender: self)
+                self?.performSegue(withIdentifier: self?.popoverSegueIdentifier ?? "", sender: self)
             }
         }
     }

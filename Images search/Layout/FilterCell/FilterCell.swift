@@ -11,6 +11,9 @@ class FilterCell: UICollectionViewCell {
     
     @IBOutlet weak var filterLabel: UILabel!
     
+    static let identifier = "FilterCell"
+    static let nibName = "FilterCell"
+    
     override func awakeFromNib() {
         super.awakeFromNib()
     }

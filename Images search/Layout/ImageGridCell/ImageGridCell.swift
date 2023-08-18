@@ -14,6 +14,8 @@ class ImageGridCell: UICollectionViewCell {
     @IBOutlet weak var shareButton: UIButton!
     
     static let identifier = "ImageGridCell"
+    static let nibName = "ImageGridCell"
+
     private var pageURL: String?
     private var largeImageURL: String?
     

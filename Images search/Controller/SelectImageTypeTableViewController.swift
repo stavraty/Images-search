@@ -19,6 +19,7 @@ class SelectImageTypeTableViewController: UITableViewController {
     private let imageTypesAPI = ["all", "photo", "illustration", "vector"]
     private let imageTypesDisplay = ["Images", "Photo", "Illustration", "Vector"]
     private let imageTypeMap: [String: String] = ["Images": "all", "Photo": "photo", "Illustration": "illustration", "Vector": "vector"]
+    let preferredContentWidth: CGFloat = 200
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,7 +33,7 @@ class SelectImageTypeTableViewController: UITableViewController {
     }
     
     override func viewWillLayoutSubviews() {
-        preferredContentSize = CGSize(width: 200, height: tableView.contentSize.height)
+        preferredContentSize = CGSize(width: preferredContentWidth, height: tableView.contentSize.height)
     }
 
     override func numberOfSections(in tableView: UITableView) -> Int {

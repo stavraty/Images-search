@@ -12,6 +12,7 @@ class SearchResultsViewController: BaseViewController {
     private var estimateWidth = 140.0
     private var cellMarginSize = 16.0
     private var pageURL: URL?
+    private let imagePageViewControllerIdentifier = "ImagePageViewController"
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +40,8 @@ class SearchResultsViewController: BaseViewController {
     }
     
     func registerCells() {
-        collectionView?.register(UINib(nibName: "ImageGridCell", bundle: nil), forCellWithReuseIdentifier: ImageGridCell.identifier)
-        filterCollectionView?.register(UINib(nibName: "FilterCell", bundle: nil), forCellWithReuseIdentifier: "FilterCell")
+        collectionView?.register(UINib(nibName: ImageGridCell.nibName, bundle: nil), forCellWithReuseIdentifier: ImageGridCell.identifier)
+        filterCollectionView?.register(UINib(nibName: FilterCell.nibName, bundle: nil), forCellWithReuseIdentifier: FilterCell.identifier)
     }
     
     private func setupDelegates() {
@@ -73,7 +74,7 @@ extension SearchResultsViewController: UICollectionViewDataSource {
             
             return cell ?? UICollectionViewCell()
         } else if collectionView == self.filterCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "FilterCell", for: indexPath) as? FilterCell
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCell.identifier, for: indexPath) as? FilterCell
             let filter = filters[indexPath.row]
             cell?.setUp(with: filter, isSelected: indexPath.row == selectedFilterIndex)
             return cell ?? UICollectionViewCell()
@@ -110,7 +111,7 @@ extension SearchResultsViewController: UICollectionViewDelegate {
                 selectedTag = filters[indexPath.row]
                 
                 filters = filters.filter { $0 != selectedTag }
-                filters.insert(selectedTag ?? "Related", at: 0)
+                filters.insert(selectedTag ?? defaultSelectedFilter, at: 0)
                 
                 collectionView.reloadData()
                 self.images = []
@@ -128,7 +129,7 @@ extension SearchResultsViewController: UICollectionViewDelegate {
     func openImagePageVC(with imageURL: URL?) {
         guard let imageURL = imageURL else { return }
         
-        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: "ImagePageViewController") as? ImagePageViewController {
+        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: imagePageViewControllerIdentifier) as? ImagePageViewController {
             imagePageVC.largeImageURL = imageURL
             imagePageVC.pageURL = pageURL
             imagePageVC.relatedImagesCollectionView = self.collectionView

@@ -15,6 +15,8 @@ class ImageZoomViewController: UIViewController {
     var largeImageURL: URL?
     var selectedImageURL: URL?
     private let imageCacheService = ImageCacheService.shared
+    private let minimumZoomScale: CGFloat = 1.0
+    private let maximumZoomScale: CGFloat = 10.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,8 +26,8 @@ class ImageZoomViewController: UIViewController {
     
     private func setupScrollView() {
         scrollView.delegate = self
-        scrollView.minimumZoomScale = 1.0
-        scrollView.maximumZoomScale = 10.0
+        scrollView.minimumZoomScale = minimumZoomScale
+        scrollView.maximumZoomScale = maximumZoomScale
         
     }
     
@@ -46,8 +48,6 @@ class ImageZoomViewController: UIViewController {
                     self?.imageView.image = image
                     self?.updateScrollViewContentSize()
                 }
-            } else {
-                print("Failed to load image from URL: \(imageURL)")
             }
         }
     }
