@@ -44,6 +44,27 @@ class SearchResultsViewController: BaseViewController {
         filterCollectionView?.register(UINib(nibName: FilterCell.nibName, bundle: nil), forCellWithReuseIdentifier: FilterCell.identifier)
     }
     
+    private func openImagePageVC(with imageURL: URL?) {
+        guard let imageURL = imageURL else { return }
+        
+        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: imagePageViewControllerIdentifier) as? ImagePageViewController {
+            imagePageVC.largeImageURL = imageURL
+            imagePageVC.pageURL = pageURL
+            imagePageVC.relatedImagesCollectionView = self.collectionView
+            imagePageVC.receivedImages = images
+            imagePageVC.searchText = searchTF.text
+            self.navigationController?.pushViewController(imagePageVC, animated: true)
+        }
+    }
+    
+    private func calculateWith() -> CGFloat {
+        let estimateWidth = CGFloat(estimateWidth)
+        let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
+        let margin = CGFloat(cellMarginSize * 2)
+        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
+        return width
+    }
+    
     private func setupDelegates() {
         self.collectionView?.dataSource = self
         self.collectionView?.delegate = self
@@ -94,14 +115,6 @@ extension SearchResultsViewController: UICollectionViewDelegateFlowLayout {
         let width = self.calculateWith()
         return CGSize(width: width, height: width)
     }
-    
-    func calculateWith() -> CGFloat {
-        let estimateWidth = CGFloat(estimateWidth)
-        let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
-        let margin = CGFloat(cellMarginSize * 2)
-        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
-        return width
-    }
 }
 
 extension SearchResultsViewController: UICollectionViewDelegate {
@@ -123,19 +136,6 @@ extension SearchResultsViewController: UICollectionViewDelegate {
             let selectedImageURL = URL(string: images[indexPath.row].largeImageURL)
             let selectedPageURL = images[indexPath.row].pageURL
             openImagePageVC(with: selectedImageURL)
-        }
-    }
-    
-    func openImagePageVC(with imageURL: URL?) {
-        guard let imageURL = imageURL else { return }
-        
-        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: imagePageViewControllerIdentifier) as? ImagePageViewController {
-            imagePageVC.largeImageURL = imageURL
-            imagePageVC.pageURL = pageURL
-            imagePageVC.relatedImagesCollectionView = self.collectionView
-            imagePageVC.receivedImages = images
-            imagePageVC.searchText = searchTF.text
-            self.navigationController?.pushViewController(imagePageVC, animated: true)
         }
     }
 }

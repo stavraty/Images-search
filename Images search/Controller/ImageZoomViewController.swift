@@ -28,7 +28,6 @@ class ImageZoomViewController: UIViewController {
         scrollView.delegate = self
         scrollView.minimumZoomScale = minimumZoomScale
         scrollView.maximumZoomScale = maximumZoomScale
-        
     }
     
     private func updateScrollViewContentSize() {

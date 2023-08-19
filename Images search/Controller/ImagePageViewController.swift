@@ -112,15 +112,23 @@ class ImagePageViewController: BaseViewController {
         }
     }
     
+    private func calculateWith() -> CGFloat {
+        let estimateWidth = CGFloat(estimateWidth)
+        let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
+        let margin = CGFloat(cellMarginSize * 2)
+        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
+        return width
+    }
+    
     private func setupActivityIndicator() {
         activityIndicator.isHidden = true
         activityIndicator.hidesWhenStopped = true
     }
-        
+    
     private func setupButtons() {
         zoomButton.setTitle("", for: .normal)
         shareButton.layer.cornerRadius = CGFloat(defaultCornerRadius)
-        shareButton.clipsToBounds = true 
+        shareButton.clipsToBounds = true
         shareButton.layer.borderWidth = defaultBorderWidth
         shareButton.layer.borderColor = defaultBorderColor
     }
@@ -151,6 +159,21 @@ class ImagePageViewController: BaseViewController {
         default:
             return nil
         }
+    }
+    
+    private func updatePhotoFormatLabel(imageURL: URL) {
+        if let format = getImageFormat(from: imageURL) {
+            let labelText = "Photo in .\(format) format"
+            photoFormatLabel.text = labelText
+        }
+    }
+    
+    private func zoomToSelectedImage(imageURL: URL) {
+        guard let currentSelectedImageURL = selectedImageURL, currentSelectedImageURL != imageURL else {
+            return
+        }
+        selectedImageURL = imageURL
+        zoomButtonTapped(self)
     }
     
     private func downloadAndSaveImage(from imageURL: URL) {
@@ -215,15 +238,6 @@ class ImagePageViewController: BaseViewController {
         }
         downloadAndSaveImage(from: imageURL)
     }
-    
-    @IBAction override func filterButtonTapped(_ sender: Any) {
-        super.filterButtonTapped(sender)
-        if let chosenImageType = chosenImageType {
-            if let searchText = searchText {
-                navigateToSearchResultsVC(with: searchText, imageType: chosenImageType)
-            }
-        }
-    }
 }
 
 extension ImagePageViewController: UICollectionViewDataSource {
@@ -255,14 +269,6 @@ extension ImagePageViewController: UICollectionViewDelegateFlowLayout {
         let width = self.calculateWith()
         return CGSize(width: width, height: width)
     }
-    
-    func calculateWith() -> CGFloat {
-        let estimateWidth = CGFloat(estimateWidth)
-        let cellCount = floor(CGFloat(self.view.frame.size.width / estimateWidth))
-        let margin = CGFloat(cellMarginSize * 2)
-        let width = (self.view.frame.size.width - CGFloat(cellMarginSize) * (cellCount - 1) - margin) / cellCount
-        return width
-    }
 }
 
 extension ImagePageViewController: UICollectionViewDelegate {
@@ -278,21 +284,6 @@ extension ImagePageViewController: UICollectionViewDelegate {
             selectedImageURL = imageURL
             zoomToSelectedImage(imageURL: imageURL)
         }
-    }
-    
-    private func updatePhotoFormatLabel(imageURL: URL) {
-        if let format = getImageFormat(from: imageURL) {
-            let labelText = "Photo in .\(format) format"
-            photoFormatLabel.text = labelText
-        }
-    }
-    
-    private func zoomToSelectedImage(imageURL: URL) {
-        guard let currentSelectedImageURL = selectedImageURL, currentSelectedImageURL != imageURL else {
-            return
-        }
-        selectedImageURL = imageURL
-        zoomButtonTapped(self)
     }
 }
 

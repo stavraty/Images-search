@@ -19,6 +19,7 @@ class BaseViewController: UIViewController {
     @IBOutlet weak var filterCollectionView: UICollectionView?
     
     private let api = APIService()
+    private let searchResultsViewControllerIdentifier = "SearchResultsViewController"
     private let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
     private var query: String?
     private var selectedFilter: String = "Related"
@@ -28,8 +29,8 @@ class BaseViewController: UIViewController {
     private let defaultBorderColor = UIColor(red: 0.89, green: 0.89, blue: 0.89, alpha: 1.00).cgColor
     private let defaultBorderColorGray = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
     private let defaultImageType = "all"
-    let defaultSelectedFilter = "Related"
     private let maxTagsToShow = 50
+    let defaultSelectedFilter = "Related"
     
     var images: [PixabayResponse.Image] = []
     var chosenImageType: String?
@@ -165,8 +166,12 @@ class BaseViewController: UIViewController {
     }
     
     @IBAction func filterButtonTapped(_ sender: Any) {
-        let popoverPresenter = PopoverPresenter(button: filterButton, delegate: self, storyboard: storyboard!)
-        popoverPresenter.presentPopover()
+        if self is SearchResultsViewController {
+            let popoverPresenter = PopoverPresenter(button: filterButton, delegate: self, storyboard: storyboard!)
+            popoverPresenter.presentPopover()
+        } else {
+            navigateToSearchResultsViewController()
+        }
     }
 }
 
@@ -175,12 +180,18 @@ extension BaseViewController: SelectImageTypeTableVCDelegate {
         self.chosenImageType = type
         self.images = []
         self.currentPage = 1
-        self.imageType = self.chosenImageType ?? defaultImageType //"all"
+        self.imageType = self.chosenImageType ?? defaultImageType
         self.fetchImages()
     }
     
     func displayStringForType(type: String) -> String? {
         return imageTypeMap[type]
+    }
+    
+    func navigateToSearchResultsViewController() {
+        if let searchResultsVC = storyboard?.instantiateViewController(withIdentifier: searchResultsViewControllerIdentifier) as? SearchResultsViewController {
+            navigationController?.pushViewController(searchResultsVC, animated: true)
+        }
     }
 }
 

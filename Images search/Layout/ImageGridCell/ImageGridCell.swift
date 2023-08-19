@@ -15,7 +15,7 @@ class ImageGridCell: UICollectionViewCell {
     
     static let identifier = "ImageGridCell"
     static let nibName = "ImageGridCell"
-
+    
     private var pageURL: String?
     private var largeImageURL: String?
     

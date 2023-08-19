@@ -43,34 +43,6 @@ class SearchViewController: UIViewController {
         }
     }
     
-    func initializeConstants() {
-        query = searchTF.text ?? ""
-        imageType = chosenImageType ?? "all"
-    }
-    
-    func setupButtonBorder() {
-        let borderLayer = CALayer()
-        borderLayer.backgroundColor = defaultBorderColor
-        let verticalInset: CGFloat = (selectImageTypeButton.frame.height - borderHeight) / 2
-        borderLayer.frame = CGRect(x: 0, y: verticalInset, width: 1, height: borderHeight)
-        selectImageTypeButton.layer.addSublayer(borderLayer)
-    }
-    
-    func setupTapGesture() {
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
-        view.addGestureRecognizer(tapGesture)
-    }
-    
-    func setupSearchTextField() {
-        searchTF.delegate = self
-        searchTF.returnKeyType = .search
-    }
-    
-    func setupSearchView() {
-        searchContainerView.layer.cornerRadius = defaultCornerRadius
-        searchContainerView.clipsToBounds = true
-    }
-    
     @objc private func tapped() {
         let popoverPresenter = PopoverPresenter(button: selectImageTypeButton, delegate: self, storyboard: storyboard!)
         popoverPresenter.presentPopover()
@@ -78,6 +50,34 @@ class SearchViewController: UIViewController {
     
     @objc private func dismissKeyboard() {
         view.endEditing(true)
+    }
+    
+    private func initializeConstants() {
+        query = searchTF.text ?? ""
+        imageType = chosenImageType ?? "all"
+    }
+    
+    private func setupButtonBorder() {
+        let borderLayer = CALayer()
+        borderLayer.backgroundColor = defaultBorderColor
+        let verticalInset: CGFloat = (selectImageTypeButton.frame.height - borderHeight) / 2
+        borderLayer.frame = CGRect(x: 0, y: verticalInset, width: 1, height: borderHeight)
+        selectImageTypeButton.layer.addSublayer(borderLayer)
+    }
+    
+    private func setupTapGesture() {
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapGesture)
+    }
+    
+    private func setupSearchTextField() {
+        searchTF.delegate = self
+        searchTF.returnKeyType = .search
+    }
+    
+    private func setupSearchView() {
+        searchContainerView.layer.cornerRadius = defaultCornerRadius
+        searchContainerView.clipsToBounds = true
     }
     
     private func setupGestures() {
