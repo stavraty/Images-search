@@ -13,16 +13,19 @@ class ImageGridCell: UICollectionViewCell {
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var shareButton: UIButton!
     
+    static let identifier = "ImageGridCell"
+    static let nibName = "ImageGridCell"
+    
     private var pageURL: String?
     private var largeImageURL: String?
     
     override func awakeFromNib() {
         super.awakeFromNib()
         setupButton()
-        configure()
+        setUp()
     }
     
-    func configure() {
+    func setUp() {
         self.layer.cornerRadius = 5
         self.clipsToBounds = true
     }
