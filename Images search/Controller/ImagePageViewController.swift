@@ -246,16 +246,9 @@ extension ImagePageViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageGridCell.identifier, for: indexPath) as? ImageGridCell
-        
-        guard let cell = cell else {
-            return UICollectionViewCell()
-        }
-        
         let image = receivedImages[indexPath.row]
-        guard let imageURL = URL(string: image.largeImageURL) else {
-            return UICollectionViewCell()
-        }
+        
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageGridCell.identifier, for: indexPath) as? ImageGridCell, let imageURL = URL(string: image.largeImageURL) else { return UICollectionViewCell() }
         
         cell.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: false)
         

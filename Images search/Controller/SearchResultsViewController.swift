@@ -45,16 +45,18 @@ class SearchResultsViewController: BaseViewController {
     }
     
     private func openImagePageVC(with imageURL: URL?) {
-        guard let imageURL = imageURL else { return }
-        
-        if let imagePageVC = storyboard?.instantiateViewController(withIdentifier: imagePageViewControllerIdentifier) as? ImagePageViewController {
-            imagePageVC.largeImageURL = imageURL
-            imagePageVC.pageURL = pageURL
-            imagePageVC.relatedImagesCollectionView = self.collectionView
-            imagePageVC.receivedImages = images
-            imagePageVC.searchText = searchTF.text
-            self.navigationController?.pushViewController(imagePageVC, animated: true)
+        guard let imageURL = imageURL,
+              let imagePageVC = storyboard?.instantiateViewController(withIdentifier: imagePageViewControllerIdentifier) as? ImagePageViewController else {
+            return
         }
+        
+        imagePageVC.largeImageURL = imageURL
+        imagePageVC.pageURL = pageURL
+        imagePageVC.relatedImagesCollectionView = self.collectionView
+        imagePageVC.receivedImages = images
+        imagePageVC.searchText = searchTF.text
+        
+        self.navigationController?.pushViewController(imagePageVC, animated: true)
     }
     
     private func calculateWith() -> CGFloat {
@@ -86,19 +88,22 @@ extension SearchResultsViewController: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if collectionView == self.collectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageGridCell.identifier, for: indexPath) as? ImageGridCell
             let image = images[indexPath.row]
-            guard let imageURL = URL(string: image.webformatURL) else {
+            
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: ImageGridCell.identifier, for: indexPath) as? ImageGridCell, let imageURL = URL(string: image.webformatURL) else {
                 return UICollectionViewCell()
             }
-            cell?.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: true)
             
-            return cell ?? UICollectionViewCell()
+            cell.setImage(with: imageURL, pageURL: image.pageURL, largeImageURL: image.largeImageURL, showShareButton: true)
+            
+            return cell
         } else if collectionView == self.filterCollectionView {
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCell.identifier, for: indexPath) as? FilterCell
+            guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FilterCell.identifier, for: indexPath) as? FilterCell else { return UICollectionViewCell() }
+            
             let filter = filters[indexPath.row]
-            cell?.setUp(with: filter, isSelected: indexPath.row == selectedFilterIndex)
-            return cell ?? UICollectionViewCell()
+            cell.setUp(with: filter, isSelected: indexPath.row == selectedFilterIndex)
+            
+            return cell
         }
         return UICollectionViewCell()
     }
