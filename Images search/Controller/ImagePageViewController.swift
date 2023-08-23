@@ -220,7 +220,13 @@ class ImagePageViewController: BaseViewController {
     }
     
     @IBAction func editImageButtonTapped(_ sender: Any) {
+        guard let selectedImage = selectedImage.image else {
+            return
+        }
         
+        let imageEditVC = ImageEditViewController()
+        imageEditVC.imageToEdit = selectedImage
+        self.navigationController?.pushViewController(imageEditVC, animated: true)
     }
     
     @IBAction func zoomButtonTapped(_ sender: Any) {
