@@ -25,14 +25,14 @@ class ImageEditViewController: UIViewController, TOCropViewControllerDelegate {
             self.navigationController?.popViewController(animated: true)
         }
     }
-
+    
     func cropViewController(_ cropViewController: TOCropViewController, didFinishCancelled cancelled: Bool) {
-
+        
         cropViewController.dismiss(animated: true) {
             self.navigationController?.popViewController(animated: true)
         }
     }
-
+    
     private func setupCropViewController() {
         guard let imageToEdit = imageToEdit else {
             return

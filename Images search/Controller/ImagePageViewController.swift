@@ -48,6 +48,7 @@ class ImagePageViewController: BaseViewController {
         
         searchTF.delegate = self
         selectedImage.image = selectedImageFromGallery
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -146,7 +147,6 @@ class ImagePageViewController: BaseViewController {
         photoFormatLabel.text = labelText
     }
     
-    
     private func setupPreviewCollectionView() {
         previewCollectionView.dataSource = self
         previewCollectionView.delegate = self
@@ -230,10 +230,15 @@ class ImagePageViewController: BaseViewController {
     }
     
     @IBAction func zoomButtonTapped(_ sender: Any) {
-        guard isImageLoaded, let imageURL = selectedImageURL else {
+        guard isImageLoaded else {
             return
         }
-        performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
+        
+        if let imageURL = selectedImageFromGallery {
+            performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
+        } else if let imageURL = selectedImageURL {
+            performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
+        }
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {

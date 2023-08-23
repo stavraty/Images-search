@@ -28,9 +28,9 @@ class SearchViewController: UIViewController {
     private let borderHeight: CGFloat = 24
     private let defaultCornerRadius: CGFloat = 5
     private let defaultBorderColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
-
+    
     weak var delegate: ImageSelectionDelegate?
-    var selectedImageFromGallery: UIImage?
+    var selectedImageFromGallery: URL? //UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,10 +51,12 @@ class SearchViewController: UIViewController {
         }
         
         if segue.identifier == imagePageSegueIdentifier, let destinationVC = segue.destination as? ImagePageViewController {
-            destinationVC.selectedImageFromGallery = selectedImageFromGallery
+            if let imageURL = selectedImageFromGallery {
+                destinationVC.largeImageURL = imageURL
+            }
         }
     }
-
+    
     @objc private func tapped() {
         let popoverPresenter = PopoverPresenter(button: selectImageTypeButton, delegate: self, storyboard: storyboard!)
         popoverPresenter.presentPopover()
@@ -143,8 +145,8 @@ extension SearchViewController: UITextFieldDelegate {
 
 extension SearchViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            selectedImageFromGallery = selectedImage
+        if let imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL {
+            selectedImageFromGallery = imageURL
         }
         
         picker.dismiss(animated: true) { [weak self] in
