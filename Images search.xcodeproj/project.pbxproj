@@ -149,9 +149,9 @@
 				F0C9BBDA2A5EA63100C8F5FD /* SearchViewController.swift */,
 				F09BCF6B2A5F381600058E42 /* SearchResultsViewController.swift */,
 				F09BCF6D2A5F391B00058E42 /* ImagePageViewController.swift */,
+				F0896F542A9646320034E4D6 /* ImageEditViewController.swift */,
 				F06B4F102A6F04B9003D6046 /* ImageZoomViewController.swift */,
 				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableViewController.swift */,
-				F0896F542A9646320034E4D6 /* ImageEditViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
