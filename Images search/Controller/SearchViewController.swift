@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ImageSelectionDelegate: AnyObject {
+    func didSelectImage(_ image: UIImage?)
+}
+
 class SearchViewController: UIViewController {
     
     @IBOutlet weak var searchTF: UITextField!
@@ -20,9 +24,13 @@ class SearchViewController: UIViewController {
     private var imageType: String = "all"
     private let imageTypeMap: [String: String] = ["all": "Images", "photo": "Photo", "illustration": "Illustration", "vector": "Vector"]
     private let popoverSegueIdentifier = "showSearchResults"
+    private let imagePageSegueIdentifier = "ImagePageSegue"
     private let borderHeight: CGFloat = 24
     private let defaultCornerRadius: CGFloat = 5
     private let defaultBorderColor = UIColor(red: 0.82, green: 0.82, blue: 0.82, alpha: 1.00).cgColor
+    
+    weak var delegate: ImageSelectionDelegate?
+    var selectedImageFromGallery: URL? //UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +48,12 @@ class SearchViewController: UIViewController {
             destinationVC.searchQuery = searchTF.text
             destinationVC.imageType = chosenImageType
             destinationVC.searchText = searchTF.text
+        }
+        
+        if segue.identifier == imagePageSegueIdentifier, let destinationVC = segue.destination as? ImagePageViewController {
+            if let imageURL = selectedImageFromGallery {
+                destinationVC.largeImageURL = imageURL
+            }
         }
     }
     
@@ -93,6 +107,14 @@ class SearchViewController: UIViewController {
             }
         }
     }
+    
+    @IBAction func selectFromGalleryButtonTapped(_ sender: Any) {
+        let imagePicker = UIImagePickerController()
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        imagePicker.delegate = self
+        present(imagePicker, animated: true, completion: nil)
+    }
 }
 
 extension SearchViewController: UIPopoverPresentationControllerDelegate {
@@ -118,5 +140,21 @@ extension SearchViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
         searchButtonTapped(textField)
         return true
+    }
+}
+
+extension SearchViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let imageURL = info[UIImagePickerController.InfoKey.imageURL] as? URL {
+            selectedImageFromGallery = imageURL
+        }
+        
+        picker.dismiss(animated: true) { [weak self] in
+            self?.performSegue(withIdentifier: "ImagePageSegue", sender: nil)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        picker.dismiss(animated: true, completion: nil)
     }
 }

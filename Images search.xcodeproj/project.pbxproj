@@ -13,6 +13,7 @@
 		F0855B662A667BE900405006 /* ImageGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0855B642A667BE900405006 /* ImageGridCell.xib */; };
 		F08871982A614E2300161EB7 /* PixabayResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08871972A614E2300161EB7 /* PixabayResponse.swift */; };
 		F088719A2A614FD100161EB7 /* APIService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F08871992A614FD100161EB7 /* APIService.swift */; };
+		F0896F552A9646320034E4D6 /* ImageEditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0896F542A9646320034E4D6 /* ImageEditViewController.swift */; };
 		F09159162A6B0D9D0084CE77 /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09159152A6B0D9D0084CE77 /* BaseViewController.swift */; };
 		F09BCF6C2A5F381600058E42 /* SearchResultsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09BCF6B2A5F381600058E42 /* SearchResultsViewController.swift */; };
 		F09BCF6E2A5F391B00058E42 /* ImagePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F09BCF6D2A5F391B00058E42 /* ImagePageViewController.swift */; };
@@ -37,6 +38,7 @@
 		F0855B642A667BE900405006 /* ImageGridCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageGridCell.xib; sourceTree = "<group>"; };
 		F08871972A614E2300161EB7 /* PixabayResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixabayResponse.swift; sourceTree = "<group>"; };
 		F08871992A614FD100161EB7 /* APIService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIService.swift; sourceTree = "<group>"; };
+		F0896F542A9646320034E4D6 /* ImageEditViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageEditViewController.swift; sourceTree = "<group>"; };
 		F09159152A6B0D9D0084CE77 /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		F09BCF6B2A5F381600058E42 /* SearchResultsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchResultsViewController.swift; sourceTree = "<group>"; };
 		F09BCF6D2A5F391B00058E42 /* ImagePageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePageViewController.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				F0C9BBDA2A5EA63100C8F5FD /* SearchViewController.swift */,
 				F09BCF6B2A5F381600058E42 /* SearchResultsViewController.swift */,
 				F09BCF6D2A5F391B00058E42 /* ImagePageViewController.swift */,
+				F0896F542A9646320034E4D6 /* ImageEditViewController.swift */,
 				F06B4F102A6F04B9003D6046 /* ImageZoomViewController.swift */,
 				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableViewController.swift */,
 			);
@@ -289,6 +292,7 @@
 				F06B4F112A6F04B9003D6046 /* ImageZoomViewController.swift in Sources */,
 				F09BCF6E2A5F391B00058E42 /* ImagePageViewController.swift in Sources */,
 				F0F7B70D2A6817DD001F39BC /* PopoverPresenter.swift in Sources */,
+				F0896F552A9646320034E4D6 /* ImageEditViewController.swift in Sources */,
 				F0855B652A667BE900405006 /* ImageGridCell.swift in Sources */,
 				F0C9BBD92A5EA63100C8F5FD /* SceneDelegate.swift in Sources */,
 				F08871982A614E2300161EB7 /* PixabayResponse.swift in Sources */,

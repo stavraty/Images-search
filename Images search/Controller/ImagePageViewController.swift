@@ -12,6 +12,7 @@ class ImagePageViewController: BaseViewController {
     
     @IBOutlet weak var selectedImage: UIImageView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var editImageButton: UIButton!
     @IBOutlet weak var zoomButton: UIButton!
     @IBOutlet weak var shareButton: UIButton!
     @IBOutlet weak var photoFormatLabel: UILabel!
@@ -34,6 +35,7 @@ class ImagePageViewController: BaseViewController {
     var relatedImagesCollectionView: UICollectionView?
     var largeImageURL: URL?
     var pageURL: URL?
+    var selectedImageFromGallery: UIImage?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,6 +47,8 @@ class ImagePageViewController: BaseViewController {
         setupGridView()
         
         searchTF.delegate = self
+        selectedImage.image = selectedImageFromGallery
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -127,6 +131,7 @@ class ImagePageViewController: BaseViewController {
     
     private func setupButtons() {
         zoomButton.setTitle("", for: .normal)
+        editImageButton.setTitle("", for: .normal)
         shareButton.layer.cornerRadius = CGFloat(defaultCornerRadius)
         shareButton.clipsToBounds = true
         shareButton.layer.borderWidth = defaultBorderWidth
@@ -141,7 +146,6 @@ class ImagePageViewController: BaseViewController {
         let labelText = "Photo in .\(format) format"
         photoFormatLabel.text = labelText
     }
-    
     
     private func setupPreviewCollectionView() {
         previewCollectionView.dataSource = self
@@ -215,11 +219,26 @@ class ImagePageViewController: BaseViewController {
         present(alertController, animated: true, completion: nil)
     }
     
-    @IBAction func zoomButtonTapped(_ sender: Any) {
-        guard isImageLoaded, let imageURL = selectedImageURL else {
+    @IBAction func editImageButtonTapped(_ sender: Any) {
+        guard let selectedImage = selectedImage.image else {
             return
         }
-        performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
+        
+        let imageEditVC = ImageEditViewController()
+        imageEditVC.imageToEdit = selectedImage
+        self.navigationController?.pushViewController(imageEditVC, animated: true)
+    }
+    
+    @IBAction func zoomButtonTapped(_ sender: Any) {
+        guard isImageLoaded else {
+            return
+        }
+        
+        if let imageURL = selectedImageFromGallery {
+            performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
+        } else if let imageURL = selectedImageURL {
+            performSegue(withIdentifier: imageZoomSegueIdentifier, sender: imageURL)
+        }
     }
     
     @IBAction func shareButtonTapped(_ sender: Any) {
