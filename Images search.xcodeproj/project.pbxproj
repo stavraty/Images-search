@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		468EE1F1E7AD5F99B8388EA0 /* Pods_Images_search.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4AE1253E164F6D0442419638 /* Pods_Images_search.framework */; };
+		F061789A2AA0D12A00E22915 /* CropContainerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06178992AA0D12A00E22915 /* CropContainerViewController.swift */; };
 		F06B4F112A6F04B9003D6046 /* ImageZoomViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F06B4F102A6F04B9003D6046 /* ImageZoomViewController.swift */; };
 		F0855B652A667BE900405006 /* ImageGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0855B632A667BE900405006 /* ImageGridCell.swift */; };
 		F0855B662A667BE900405006 /* ImageGridCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F0855B642A667BE900405006 /* ImageGridCell.xib */; };
@@ -33,6 +34,7 @@
 /* Begin PBXFileReference section */
 		205375BB9877D4340F0B4186 /* Pods-Images search.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Images search.debug.xcconfig"; path = "Target Support Files/Pods-Images search/Pods-Images search.debug.xcconfig"; sourceTree = "<group>"; };
 		4AE1253E164F6D0442419638 /* Pods_Images_search.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Images_search.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F06178992AA0D12A00E22915 /* CropContainerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CropContainerViewController.swift; sourceTree = "<group>"; };
 		F06B4F102A6F04B9003D6046 /* ImageZoomViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageZoomViewController.swift; sourceTree = "<group>"; };
 		F0855B632A667BE900405006 /* ImageGridCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageGridCell.swift; sourceTree = "<group>"; };
 		F0855B642A667BE900405006 /* ImageGridCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ImageGridCell.xib; sourceTree = "<group>"; };
@@ -150,6 +152,7 @@
 				F09BCF6B2A5F381600058E42 /* SearchResultsViewController.swift */,
 				F09BCF6D2A5F391B00058E42 /* ImagePageViewController.swift */,
 				F0896F542A9646320034E4D6 /* ImageEditViewController.swift */,
+				F06178992AA0D12A00E22915 /* CropContainerViewController.swift */,
 				F06B4F102A6F04B9003D6046 /* ImageZoomViewController.swift */,
 				F0D132322A61CBD10023FBE8 /* SelectImageTypeTableViewController.swift */,
 			);
@@ -288,6 +291,7 @@
 				F09BCF6C2A5F381600058E42 /* SearchResultsViewController.swift in Sources */,
 				F0D132332A61CBD10023FBE8 /* SelectImageTypeTableViewController.swift in Sources */,
 				F09159162A6B0D9D0084CE77 /* BaseViewController.swift in Sources */,
+				F061789A2AA0D12A00E22915 /* CropContainerViewController.swift in Sources */,
 				F0C9BBD72A5EA63100C8F5FD /* AppDelegate.swift in Sources */,
 				F06B4F112A6F04B9003D6046 /* ImageZoomViewController.swift in Sources */,
 				F09BCF6E2A5F391B00058E42 /* ImagePageViewController.swift in Sources */,

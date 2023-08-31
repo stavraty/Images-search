@@ -224,8 +224,10 @@ class ImagePageViewController: BaseViewController {
             return
         }
         
-        let imageEditVC = ImageEditViewController()
+        // let imageEditVC = ImageEditViewController()
+        let imageEditVC = CropContainerViewController()
         imageEditVC.imageToEdit = selectedImage
+        // imageEditVC.searchText = searchTF.text
         self.navigationController?.pushViewController(imageEditVC, animated: true)
     }
     
