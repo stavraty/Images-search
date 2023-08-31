@@ -1268,6 +1268,7 @@
                                         <buttonConfiguration key="configuration" style="plain" image="editImageIcon"/>
                                         <connections>
                                             <action selector="editImageButtonTapped:" destination="MVC-cq-XMX" eventType="touchUpInside" id="Pvt-rP-B07"/>
+                                            <segue destination="jDR-FC-Dm1" kind="show" identifier="showImageEditSegue" id="7w9-YU-Wb2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bal-uP-xzj">
@@ -2259,30 +2260,30 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <containerView opaque="NO" contentMode="scaleToFill" restorationIdentifier="containerView" translatesAutoresizingMaskIntoConstraints="NO" id="xum-uc-lkB">
-                                <rect key="frame" x="0.0" y="128" width="414" height="768"/>
+                            <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hue-mu-dTf">
+                                <rect key="frame" x="0.0" y="134" width="414" height="728"/>
                                 <connections>
-                                    <segue destination="Sda-4d-SMO" kind="embed" id="N30-HQ-ZEo"/>
+                                    <segue destination="hDH-5o-8aF" kind="embed" id="QQZ-Qb-LqR"/>
                                 </connections>
                             </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2NL-cH-GQa"/>
                         <color key="backgroundColor" red="0.96470588239999999" green="0.96470588239999999" blue="0.96470588239999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
+                            <constraint firstItem="Hue-mu-dTf" firstAttribute="top" secondItem="py0-Wp-d3J" secondAttribute="bottom" constant="8" symbolic="YES" id="0g6-2f-uaJ"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="trailing" secondItem="JHT-TG-4Z4" secondAttribute="trailing" id="1Pq-BJ-ZuB"/>
+                            <constraint firstAttribute="trailing" secondItem="Hue-mu-dTf" secondAttribute="trailing" id="2gq-KH-p3z"/>
+                            <constraint firstItem="Hue-mu-dTf" firstAttribute="leading" secondItem="JHT-TG-4Z4" secondAttribute="leading" id="6Tx-bm-Xv4"/>
                             <constraint firstItem="2NL-cH-GQa" firstAttribute="trailing" secondItem="py0-Wp-d3J" secondAttribute="trailing" id="8L8-8Y-ekd"/>
                             <constraint firstAttribute="top" secondItem="py0-Wp-d3J" secondAttribute="top" id="9Ow-FY-1aY"/>
-                            <constraint firstItem="xum-uc-lkB" firstAttribute="leading" secondItem="2NL-cH-GQa" secondAttribute="leading" id="9rV-12-iex"/>
+                            <constraint firstItem="Hue-mu-dTf" firstAttribute="bottom" secondItem="2NL-cH-GQa" secondAttribute="bottom" id="FvK-jS-0qF"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="top" secondItem="JHT-TG-4Z4" secondAttribute="top" id="GC1-SM-djs"/>
                             <constraint firstAttribute="top" secondItem="py0-Wp-d3J" secondAttribute="top" id="Kff-a1-90z"/>
-                            <constraint firstItem="xum-uc-lkB" firstAttribute="top" secondItem="py0-Wp-d3J" secondAttribute="bottom" constant="2" id="Q6x-iF-J1J"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="trailing" secondItem="JHT-TG-4Z4" secondAttribute="trailing" id="VVm-g4-O3l"/>
-                            <constraint firstItem="2NL-cH-GQa" firstAttribute="trailing" secondItem="xum-uc-lkB" secondAttribute="trailing" id="Z8Y-Ai-bgE"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="trailing" secondItem="JHT-TG-4Z4" secondAttribute="trailing" id="bTY-HS-DWW"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="leading" secondItem="JHT-TG-4Z4" secondAttribute="leading" id="h2C-7y-POy"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="leading" secondItem="JHT-TG-4Z4" secondAttribute="leading" id="ixx-PO-Ulk"/>
                             <constraint firstAttribute="top" secondItem="py0-Wp-d3J" secondAttribute="top" id="oSU-oS-wsJ"/>
-                            <constraint firstItem="xum-uc-lkB" firstAttribute="bottom" secondItem="2NL-cH-GQa" secondAttribute="bottom" constant="34" id="rHT-AQ-JXG"/>
                             <constraint firstItem="py0-Wp-d3J" firstAttribute="leading" secondItem="JHT-TG-4Z4" secondAttribute="leading" id="vqC-hG-LOu"/>
                             <constraint firstAttribute="leading" secondItem="py0-Wp-d3J" secondAttribute="leading" id="yin-4I-cyI"/>
                             <constraint firstAttribute="trailing" secondItem="py0-Wp-d3J" secondAttribute="trailing" id="zb0-Hu-DfI"/>
@@ -2333,7 +2334,7 @@
                     <navigationItem key="navigationItem" id="tVi-BG-f0j"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="containerView" destination="xum-uc-lkB" id="UaD-EZ-NQQ"/>
+                        <outlet property="containerView" destination="Hue-mu-dTf" id="AgJ-Js-YUI"/>
                         <outlet property="filterButton" destination="ZZb-YT-F90" id="8Hw-ur-dAJ"/>
                         <outlet property="headerView" destination="py0-Wp-d3J" id="vMT-PQ-qlf"/>
                         <outlet property="homeButton" destination="Qqz-3X-AJ4" id="PhT-KJ-eCj"/>
@@ -2343,22 +2344,21 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORc-5n-Mn1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2658" y="686"/>
+            <point key="canvasLocation" x="2657.971014492754" y="685.71428571428567"/>
         </scene>
-        <!--Crop Container View-->
-        <scene sceneID="PSM-zV-tYV">
+        <!--View Controller-->
+        <scene sceneID="ZAl-Cp-se4">
             <objects>
-                <viewController storyboardIdentifier="CropContainerView" id="Sda-4d-SMO" customClass="CropContainerView" customModule="Images_search" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="kKh-xp-2Yo">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="762"/>
+                <viewController id="hDH-5o-8aF" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="x3p-7k-nBQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <viewLayoutGuide key="safeArea" id="rNb-Nw-1WY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nd6-Wy-Qwy" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="L8Y-pd-FAp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3455" y="640"/>
+            <point key="canvasLocation" x="3491" y="686"/>
         </scene>
     </scenes>
     <resources>

@@ -25,6 +25,7 @@ class ImagePageViewController: BaseViewController {
     private var selectedImageURL: URL?
     private var isImageLoaded = false
     private let imageZoomSegueIdentifier = "showImageZoomViewSegue"
+    private let imageEditSegueIdentifier = "showImageEditSegue"
     private let searchResultsViewControllerIdentifier = "SearchResultsViewController"
     private var estimateWidth = 95.0
     private var cellMarginSize = 16.0
@@ -75,8 +76,14 @@ class ImagePageViewController: BaseViewController {
                 destinationVC.selectedImageURL = selectedImageURL
             }
         }
+        
+        if segue.identifier == imageEditSegueIdentifier {
+            if let destinationVC = segue.destination as? ImageEditViewController, let image = sender as? UIImage {
+                destinationVC.imageToEdit = image
+            }
+        }
     }
-    
+
     func loadLargeImage(withURL url: URL) {
         selectedImageURL = url
         isActivityIndicatorActive(true)
@@ -223,12 +230,7 @@ class ImagePageViewController: BaseViewController {
         guard let selectedImage = selectedImage.image else {
             return
         }
-        
-        // let imageEditVC = ImageEditViewController()
-        let imageEditVC = CropContainerViewController()
-        imageEditVC.imageToEdit = selectedImage
-        // imageEditVC.searchText = searchTF.text
-        self.navigationController?.pushViewController(imageEditVC, animated: true)
+        performSegue(withIdentifier: imageEditSegueIdentifier, sender: selectedImage)
     }
     
     @IBAction func zoomButtonTapped(_ sender: Any) {
