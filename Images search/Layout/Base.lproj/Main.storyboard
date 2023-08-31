@@ -1268,7 +1268,6 @@
                                         <buttonConfiguration key="configuration" style="plain" image="editImageIcon"/>
                                         <connections>
                                             <action selector="editImageButtonTapped:" destination="MVC-cq-XMX" eventType="touchUpInside" id="Pvt-rP-B07"/>
-                                            <segue destination="jDR-FC-Dm1" kind="show" identifier="showImageEditSegue" id="7w9-YU-Wb2"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bal-uP-xzj">
@@ -1330,7 +1329,6 @@
                                         <buttonConfiguration key="configuration" style="plain" image="zoomButton"/>
                                         <connections>
                                             <action selector="zoomButtonTapped:" destination="MVC-cq-XMX" eventType="touchUpInside" id="Jkq-po-ikK"/>
-                                            <segue destination="WUj-N3-3bx" kind="show" identifier="showImageZoomViewSegue" animates="NO" id="3kf-tJ-aYj"/>
                                         </connections>
                                     </button>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="HrI-tB-F0d" userLabel="Stack View Format">
@@ -1934,6 +1932,8 @@
                         <outlet property="selectedImage" destination="NGY-sa-koG" id="nBy-2h-q0t"/>
                         <outlet property="shareButton" destination="DU5-tP-Uq6" id="7jm-0n-3Qv"/>
                         <outlet property="zoomButton" destination="Q2u-h0-Ucx" id="owv-y6-Nb5"/>
+                        <segue destination="jDR-FC-Dm1" kind="show" identifier="showImageEditSegue" id="v0a-sH-V3l"/>
+                        <segue destination="WUj-N3-3bx" kind="show" identifier="showImageZoomViewSegue" id="dlB-cF-KLN"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ni2-dE-PmP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -2262,9 +2262,8 @@
                             </view>
                             <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Hue-mu-dTf">
                                 <rect key="frame" x="0.0" y="134" width="414" height="728"/>
-                                <connections>
-                                    <segue destination="hDH-5o-8aF" kind="embed" id="QQZ-Qb-LqR"/>
-                                </connections>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <color key="tintColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </containerView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="2NL-cH-GQa"/>
@@ -2334,7 +2333,7 @@
                     <navigationItem key="navigationItem" id="tVi-BG-f0j"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="containerView" destination="Hue-mu-dTf" id="AgJ-Js-YUI"/>
+                        <outlet property="cropView" destination="Hue-mu-dTf" id="AgJ-Js-YUI"/>
                         <outlet property="filterButton" destination="ZZb-YT-F90" id="8Hw-ur-dAJ"/>
                         <outlet property="headerView" destination="py0-Wp-d3J" id="vMT-PQ-qlf"/>
                         <outlet property="homeButton" destination="Qqz-3X-AJ4" id="PhT-KJ-eCj"/>
@@ -2345,20 +2344,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ORc-5n-Mn1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2657.971014492754" y="685.71428571428567"/>
-        </scene>
-        <!--View Controller-->
-        <scene sceneID="ZAl-Cp-se4">
-            <objects>
-                <viewController id="hDH-5o-8aF" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="x3p-7k-nBQ">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="728"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="L8Y-pd-FAp" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="3491" y="686"/>
         </scene>
     </scenes>
     <resources>

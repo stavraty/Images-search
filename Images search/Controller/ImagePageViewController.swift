@@ -49,7 +49,7 @@ class ImagePageViewController: BaseViewController {
         
         searchTF.delegate = self
         selectedImage.image = selectedImageFromGallery
-
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -83,7 +83,7 @@ class ImagePageViewController: BaseViewController {
             }
         }
     }
-
+    
     func loadLargeImage(withURL url: URL) {
         selectedImageURL = url
         isActivityIndicatorActive(true)

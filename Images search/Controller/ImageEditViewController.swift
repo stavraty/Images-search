@@ -10,8 +10,8 @@ import TOCropViewController
 import Photos
 
 class ImageEditViewController: BaseViewController, TOCropViewControllerDelegate {
-
-    @IBOutlet weak var containerView: UIView!
+    
+    @IBOutlet weak var cropView: UIView!
     
     var imageToEdit: UIImage?
     
@@ -34,7 +34,7 @@ class ImageEditViewController: BaseViewController, TOCropViewControllerDelegate 
             self.navigationController?.popViewController(animated: true)
         }
     }
-
+    
     private func setupCropViewController() {
         guard let imageToEdit = imageToEdit else {
             return
@@ -42,22 +42,22 @@ class ImageEditViewController: BaseViewController, TOCropViewControllerDelegate 
         
         let cropViewController = TOCropViewController(image: imageToEdit)
         cropViewController.aspectRatioLockEnabled = true
-        cropViewController.aspectRatioPreset = .presetOriginal
-        cropViewController.doneButtonColor = UIColor(red: 0.26, green: 0.04, blue: 0.88, alpha: 1.00)
+        cropViewController.aspectRatioPreset = .preset16x9
+        
+        cropViewController.doneButtonColor = .white
+        cropViewController.cancelButtonColor = .white
         cropViewController.doneButtonTitle = "✓ Save"
         cropViewController.resetButtonHidden = true
         cropViewController.rotateButtonsHidden = true
         cropViewController.toolbar.clampButtonHidden = true
-        cropViewController.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
-
+        
         cropViewController.delegate = self
         
         addChild(cropViewController)
-        cropViewController.view.frame = containerView.bounds
-        containerView.addSubview(cropViewController.view)
+        cropViewController.view.frame = cropView.bounds
+        cropView.addSubview(cropViewController.view)
         cropViewController.didMove(toParent: self)
     }
-
     
     private func saveCroppedImageToGallery(_ image: UIImage) {
         PHPhotoLibrary.shared().performChanges({
@@ -77,20 +77,8 @@ class ImageEditViewController: BaseViewController, TOCropViewControllerDelegate 
             self?.navigationController?.popViewController(animated: true)
         }
         alertController.addAction(okAction)
-        present(alertController, animated: true, completion: nil)
+        DispatchQueue.main.async {
+            self.present(alertController, animated: true, completion: nil)
+        }
     }
 }
-
-
-//
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//
-//        if let cropContainerVC = storyboard?.instantiateViewController(withIdentifier: "CropContainerView") as? CropContainerViewController {
-//            addChild(cropContainerVC)
-//            cropContainerVC.view.frame = containerView.bounds
-//            containerView.addSubview(cropContainerVC.view)
-//            cropContainerVC.didMove(toParent: self)
-//        }
-//    }
-//}
