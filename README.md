@@ -62,7 +62,7 @@ The app's design is based on the Figma template.
 
 ## License
 
-This project is distributed under the [MIT License]((https://github.com/stavraty/Images-search/blob/dev/LICENCE).
+This project is distributed under the [MIT License](https://github.com/stavraty/Images-search/blob/dev/LICENCE).
 
 ---
 
